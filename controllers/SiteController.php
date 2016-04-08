@@ -52,7 +52,7 @@ class SiteController extends Controller {
         $totalUsers = Yii::$app->db->createCommand('SELECT COUNT(*) FROM user')->queryScalar();
         $totalPosts = Yii::$app->db->createCommand('SELECT COUNT(*) FROM post')->queryScalar();
         return $this->render('index', [
-                    '$cantake' => number_format($cantake, 2),
+                    'cantake' => number_format($cantake, 2),
                     'totalMoney' => number_format($totalMoney, 2),
                     'totalUsers' => $totalUsers,
                     'totalPosts' => $totalPosts
