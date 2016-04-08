@@ -62,6 +62,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $data->stats->views;
                 }
             ],
+            [
+                'attribute' => 'profit',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    return $data->stats->profit;
+                }
+            ],
             'created_at',
             [
                 'class' => 'yii\grid\ActionColumn',
