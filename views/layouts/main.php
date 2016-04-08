@@ -25,7 +25,7 @@ AppAsset::register($this);
         <div class="wrap">
             <?php
             NavBar::begin([
-                'options' => ['class' => 'navbar-inverse navbar-fixed-top',],
+                'options' => ['class' => 'navbar-inverse navbar-fixed-top'],
             ]);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
