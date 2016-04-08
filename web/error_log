@@ -1,0 +1,6 @@
+[18-Nov-2015 15:16:12 UTC] PHP Fatal error:  Call to undefined method app\models\User::findByUsername() in /home/khaledhang/public_html/basic/models/LoginForm.php on line 73
+[18-Nov-2015 15:16:42 UTC] PHP Fatal error:  Call to undefined method app\models\User::findByUsername() in /home/khaledhang/public_html/basic/models/LoginForm.php on line 73
+[18-Nov-2015 15:16:44 UTC] PHP Fatal error:  Call to undefined method app\models\User::findByUsername() in /home/khaledhang/public_html/basic/models/LoginForm.php on line 73
+[18-Nov-2015 15:16:46 UTC] PHP Fatal error:  Call to undefined method app\models\User::findByUsername() in /home/khaledhang/public_html/basic/models/LoginForm.php on line 73
+[18-Nov-2015 15:16:56 UTC] PHP Fatal error:  Call to undefined method app\models\User::findByUsername() in /home/khaledhang/public_html/basic/models/LoginForm.php on line 73
+[18-Nov-2015 15:33:05 UTC] PHP Fatal error:  Class 'app\controllers\AccessControl' not found in /home/khaledhang/public_html/basic/controllers/UserController.php on line 20
