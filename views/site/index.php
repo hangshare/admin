@@ -8,8 +8,8 @@ $this->title = 'HangShare';
         <div class="row">
             <div class="row">
                 <div class="well text-center">
-                    <h2>Money Needed</h2>
-                    <span class="mo">$<?= $totalMoney ?></span>
+                    <h2>Can Generated</h2>
+                    <span class="mo">$<?= $cantake ?></span>
                 </div>
                 <div class="well text-center">
                     <h2>Money Generated</h2>
