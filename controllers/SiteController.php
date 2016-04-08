@@ -48,12 +48,12 @@ class SiteController extends Controller {
     public function actionIndex() {
 
         $cantake = Yii::$app->db->createCommand('SELECT SUM(cantake_amount) FROM user_stats')->queryScalar();
-        $totalMoneyGenerated = Yii::$app->db->createCommand('SELECT SUM(total_amount) FROM user_stats')->queryScalar();
+        $totalMoney = Yii::$app->db->createCommand('SELECT SUM(total_amount) FROM user_stats')->queryScalar();
         $totalUsers = Yii::$app->db->createCommand('SELECT COUNT(*) FROM user')->queryScalar();
         $totalPosts = Yii::$app->db->createCommand('SELECT COUNT(*) FROM post')->queryScalar();
         return $this->render('index', [
-                    'totalMoney' => number_format($cantake, 2),
-                    'totalMoneyGenerated' => number_format($totalMoneyGenerated, 2),
+                    '$cantake' => number_format($cantake, 2),
+                    'totalMoney' => number_format($totalMoney, 2),
                     'totalUsers' => $totalUsers,
                     'totalPosts' => $totalPosts
         ]);
