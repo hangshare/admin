@@ -24,6 +24,7 @@ AppAsset::register($this);
         <?php $this->beginBody() ?>
         <div class="wrap">
             <?php
+            NavBar::begin();
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
