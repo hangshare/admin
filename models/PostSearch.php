@@ -71,6 +71,12 @@ class PostSearch extends Post {
                     'label' => 'Views',
                     'default' => SORT_DESC
                 ],
+                'profit' => [
+                    'asc' => ['post_stats.profit' => SORT_ASC],
+                    'desc' => ['post_stats.profit' => SORT_DESC],
+                    'label' => 'Profit',
+                    'default' => SORT_DESC
+                ],
                 'urlTitle' => [
                     'asc' => ['urlTitle' => SORT_ASC],
                     'desc' => ['urlTitle' => SORT_DESC],
