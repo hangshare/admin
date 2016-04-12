@@ -9,8 +9,8 @@ use yii\widgets\ActiveForm;
 $s3FormDetails = getS3Details('hangshare.admin');
 
 function getS3Details($s3Bucket, $region = 'us-east-1', $acl = 'public-read') {
-    $awsKey = 'AKIAIML2YDVMFFDEVNIQ';
-    $awsSecret = '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';
+    $awsKey = 'AKIAIXXCGXOS77W753RQ';
+    $awsSecret = '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';
     $algorithm = "AWS4-HMAC-SHA256";
     $service = "s3";
     $date = gmdate("Ymd\THis\Z");
