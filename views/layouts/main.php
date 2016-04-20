@@ -24,7 +24,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 <div class="wrap">
     <?php
-    if (!Yii::$app()->user->isGuest) {
+    if (!Yii::$app->user->isGuest) {
         NavBar::begin([
             'options' => ['class' => 'navbar-inverse navbar-fixed-top'],
         ]);
