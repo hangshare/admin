@@ -15,8 +15,20 @@ use yii\filters\AccessControl;
  */
 class CountryController extends Controller {
 
+
     public function behaviors() {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['create', 'delete', 'index', 'view', 'update', 'edit'],
+                'rules' => [
+                    [
+                        'actions' => ['create', 'delete', 'index', 'view', 'update', 'edit'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -39,7 +51,6 @@ class CountryController extends Controller {
                     'dataProvider' => $dataProvider,
         ]);
     }
-
     /**
      * Displays a single Country model.
      * @param integer $id
@@ -50,7 +61,6 @@ class CountryController extends Controller {
                     'model' => $this->findModel($id),
         ]);
     }
-
     /**
      * Creates a new Country model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -67,7 +77,6 @@ class CountryController extends Controller {
             ]);
         }
     }
-
     /**
      * Updates an existing Country model.
      * If update is successful, the browser will be redirected to the 'view' page.

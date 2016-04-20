@@ -20,10 +20,10 @@ class UserController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'delete', 'index', 'view', 'update', 'Plot'],
+                'only' => ['create', 'delete', 'index', 'view', 'update', 'plot'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'view', 'update', 'Plot'],
+                        'actions' => ['create', 'delete', 'index', 'view', 'update', 'plot'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
