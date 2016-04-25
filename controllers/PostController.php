@@ -14,16 +14,20 @@ use app\components\AwsEmail;
 /**
  * PostController implements the CRUD actions for Post model.
  */
-class PostController extends Controller {
+class PostController extends Controller
+{
 
-    public function behaviors() {
+    public $enableCsrfValidation = false;
+
+    public function behaviors()
+    {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'delete', 'index', 'view', 'update', 'setfeatured', 'plot', 'export'],
+                'only' => ['create', 'delete', 'index', 'view', 'update', 'setfeatured', 'plot', 'export', 'inc'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'view', 'update', 'setfeatured', 'export', 'plot'],
+                        'actions' => ['create', 'delete', 'index', 'view', 'update', 'setfeatured', 'export', 'plot', 'inc'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -38,7 +42,27 @@ class PostController extends Controller {
         ];
     }
 
-    public function actionPlot() {
+    public function actionInc()
+    {
+        if (isset($_POST['views']) && isset($_POST['price'])) {
+            $id = $_POST['id'];
+            $userId = $_POST['userId'];
+            $total_price = $_POST['views'] * $_POST['price'];
+            $total_views = $_POST['views'];
+            Yii::$app->db->createCommand(
+                "UPDATE `post_stats` SET `views`=`views`+{$total_views}, `profit` = `profit` + {$total_price} WHERE `postId`= {$id}")
+                ->query();
+            Yii::$app->db->createCommand(
+                "UPDATE `user_stats` SET `post_total_views`=`post_total_views`+{$total_views}, `post_views`=`post_views`+{$total_views},
+                `available_amount`=`available_amount`+{$total_price}, `total_amount`=`total_amount`+ {$total_price}
+                WHERE `userId`= {$userId}")->query();
+
+        }
+        return $this->redirect(['index']);
+    }
+
+    public function actionPlot()
+    {
 
         $from = isset($_GET['fromuser']) ? strtotime($_GET['fromuser']) : strtotime('-25 day', time());
         $to = isset($_GET['touser']) ? strtotime($_GET['touser']) : time();
@@ -62,7 +86,8 @@ class PostController extends Controller {
         echo json_encode($response);
     }
 
-    public function actionExport() {
+    public function actionExport()
+    {
         $model = Post::find()->all();
 
         $objPHPExcel = new \PHPExcel();
@@ -130,17 +155,19 @@ class PostController extends Controller {
      * Lists all Post models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $searchModel = new PostSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
-    public function actionSetfeatured() {
+    public function actionSetfeatured()
+    {
         $this->layout = false;
         Yii::$app->db->createCommand("UPDATE post SET featured = {$_POST['value']} WHERE id = {$_POST['id']};")->query();
         echo 'done';
@@ -151,9 +178,10 @@ class PostController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         return $this->render('view', [
-                    'model' => $this->findModel($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -162,14 +190,15 @@ class PostController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new Post();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -180,14 +209,15 @@ class PostController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                        'model' => $model,
+                'model' => $model,
             ]);
         }
     }
@@ -198,7 +228,8 @@ class PostController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         //Get User ID
         $deleted_post = Yii::$app->db->createCommand("
                 SELECT 
@@ -238,7 +269,8 @@ class PostController extends Controller {
      * @return Post the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = Post::findOne($id)) !== null) {
             return $model;
         } else {
