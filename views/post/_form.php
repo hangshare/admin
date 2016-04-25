@@ -9,23 +9,13 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="post-form">
-
-    <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'userId')->textInput() ?>
-
-    <?= $form->field($model, 'cover')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'type')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
-
+    <form method="post" action="<?= Yii::$app->urlManager->createUrl('//post/inc') ?>">
+        <lable>Add Views</lable>
+        <input name="views" type="text" class="form-control">
+        <lable>View Price</lable>
+        <input name="price" type="text" class="form-control">
+        <input name="id" type="hidden" value="<?= $model->id ?>">
+        <input name="userId" type="hidden" value="<?= $model->userId ?>">
+        <input type="submit" class="btn btn-primary" value="Add">
+    </form>
 </div>
