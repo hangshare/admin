@@ -12,14 +12,16 @@ use app\models\Post;
  * @property mixed urlTitle
  * @property mixed featured
  */
-class PostSearch extends Post {
+class PostSearch extends Post
+{
 
     public $user, $views;
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['id', 'userId', 'type', 'featured'], 'integer'],
             [['cover', 'title', 'created_at', 'featured', 'user', 'urlTitle'], 'safe'],
@@ -29,7 +31,8 @@ class PostSearch extends Post {
     /**
      * @inheritdoc
      */
-    public function scenarios() {
+    public function scenarios()
+    {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -41,53 +44,60 @@ class PostSearch extends Post {
      *
      * @return ActiveDataProvider
      */
-    public function search($params) {
+    public function search($params)
+    {
         $query = Post::find();
         $query->joinWith([
             'user',
             'stats']);
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query
         ]);
 
         $dataProvider->setSort([
+            'defaultOrder' => ['id' => SORT_DESC],
             'attributes' => [
-                'id',
+                'id' => [
+                    'asc' => ['id' => SORT_ASC],
+                    'desc' => ['id' => SORT_DESC],
+                    'label' => 'ID',
+                    'default' => SORT_DESC
+                ],
                 'user' => [
                     'asc' => ['user.name' => SORT_ASC],
                     'desc' => ['user.name' => SORT_DESC],
                     'label' => 'User Name',
-                    'default' => SORT_ASC
+//                    'default' => SORT_ASC
                 ],
                 'title' => [
                     'asc' => ['title' => SORT_ASC],
                     'desc' => ['title' => SORT_DESC],
                     'label' => 'Title',
-                    'default' => SORT_ASC
+//                    'default' => SORT_ASC
                 ],
                 'views' => [
                     'asc' => ['post_stats.views' => SORT_ASC],
                     'desc' => ['post_stats.views' => SORT_DESC],
                     'label' => 'Views',
-                    'default' => SORT_DESC
+//                    'default' => SORT_DESC
                 ],
                 'profit' => [
                     'asc' => ['post_stats.profit' => SORT_ASC],
                     'desc' => ['post_stats.profit' => SORT_DESC],
                     'label' => 'Profit',
-                    'default' => SORT_DESC
+//                    'default' => SORT_DESC
                 ],
                 'urlTitle' => [
                     'asc' => ['urlTitle' => SORT_ASC],
                     'desc' => ['urlTitle' => SORT_DESC],
                     'label' => 'Url Link',
-                    'default' => SORT_DESC
+//                    'default' => SORT_DESC
                 ],
                 'created_at' => [
                     'asc' => ['created_at' => SORT_ASC],
                     'desc' => ['created_at' => SORT_DESC],
                     'label' => 'Post Date',
-                    'default' => SORT_DESC
+//                    'default' => SORT_DESC
                 ],
             ]
         ]);
@@ -106,7 +116,7 @@ class PostSearch extends Post {
             'post.type' => $this->type,
             'post.created_at' => $this->created_at,
             'post.featured' => $this->featured,
-            'post.urlTitle'=>$this->urlTitle,
+            'post.urlTitle' => $this->urlTitle,
             'user.name' => $this->user,
         ]);
         $query->orFilterWhere([
@@ -114,7 +124,7 @@ class PostSearch extends Post {
         ]);
 
         $query->andFilterWhere(['like', 'cover', $this->cover])
-                ->andFilterWhere(['like', 'title', $this->title]);
+            ->andFilterWhere(['like', 'title', $this->title]);
 
         return $dataProvider;
     }
