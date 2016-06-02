@@ -36,7 +36,7 @@ AppAsset::register($this);
                 ['label' => 'Transaction', 'url' => ['/usertransactions/index']],
                 ['label' => 'Posts', 'url' => ['/post/index']],
                 ['label' => 'Bulk Email', 'url' => ['/newsletter/index']],
-                ['label' => 'Views', 'url' => ['/postview/index']],
+//                ['label' => 'Views', 'url' => ['/postview/index']],
                 ['label' => 'Payment', 'url' => ['/userpayment/index']],
                 ['label' => 'FAQ', 'url' => ['/faq/index']],
                 ['label' => 'Sys Emails', 'url' => ['/emailtemplate/index']],
