@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($data) {
                     if (!isset($data->user))
                         return '<i>Guest</i>';
-                    return Html::a($data->user->name, 'https://www.hangshare.com/user/' . $data->userId, [
+                    return Html::a($data->user->name, "https://www.hangshare.com/user/{$data->userId}/", [
                                 'target' => '_blank'
                     ]);
                 },
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => function ($data) {
                             if (!isset($data->post))
                                 return '<i>Deleted Post</i>';
-                            return Html::a($data->post->title, 'https://www.hangshare.com/explore/' . $data->post->id . '?title=' . urlencode($data->post->title), [
+                            return Html::a($data->post->title, "https://www.hangshare.com/{$data->post->urlTitle}/", [
                                         'target' => '_blank'
                             ]);
                         },

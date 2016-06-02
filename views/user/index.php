@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'id',
                 'format' => 'raw',
                 'value' => function ($data) {
-                    return Html::a($data->id, 'https://www.hangshare.com/user/' . $data->id, [
+                    return Html::a($data->id, "https://www.hangshare.com/user/{$data->id}/", [
                                 'target' => '_blank'
                     ]);
                 },
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'name',
                         'format' => 'raw',
                         'value' => function ($data) {
-                            return Html::a($data->name, 'https://www.hangshare.com/user/' . $data->id, [
+                            return Html::a($data->name, "https://www.hangshare.com/user/{$data->id}/", [
                                         'target' => '_blank'
                             ]);
                         },

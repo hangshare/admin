@@ -28,7 +28,7 @@ $this->title = 'HangShare';
         <div class="row" style="margin-top: 20px;">
             <h2>Tools</h2>
             <ul class="list-inline">
-                <li><a href="https://www.hangshare.com/site/flush" class="btn btn-danger">Flush Cache</a></li>
+                <li><a href="https://www.hangshare.com/site/flush/" class="btn btn-danger">Flush Cache</a></li>
             </ul>
         </div>
         <div class="row">
