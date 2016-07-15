@@ -40,8 +40,8 @@ class Faq extends \yii\db\ActiveRecord {
         return [
             [['userId', 'categoryId','published'], 'integer'],
             [['question', 'answer'], 'required'],
-            [['created_at','email'], 'safe'],
-            [['question'], 'string', 'max' => 500],
+            [['created_at','email','lang'], 'safe'],
+            [['question','lang'], 'string', 'max' => 500],
             [['answer'], 'string', 'max' => 3000]
         ];
     }
