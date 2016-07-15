@@ -10,7 +10,6 @@ use Yii;
  * @property integer $id
  * @property string $title
  * @property integer $parent
- * @property integer $show_menu
  * @property string $url_link
  */
 class Category extends \yii\db\ActiveRecord
@@ -29,8 +28,8 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['parent', 'show_menu'], 'integer'],
-            [['title'], 'string', 'max' => 200],
+            [['parent'], 'integer'],
+            [['title', 'lang'], 'string', 'max' => 200],
             [['url_link'], 'string', 'max' => 70]
         ];
     }
@@ -44,7 +43,6 @@ class Category extends \yii\db\ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
             'parent' => 'Parent',
-            'show_menu' => 'Show Menu',
             'url_link' => 'Url Link',
         ];
     }
