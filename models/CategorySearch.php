@@ -19,7 +19,7 @@ class CategorySearch extends Category
     {
         return [
             [['id', 'parent'], 'integer'],
-            [['title', 'url_link'], 'safe'],
+            [['title', 'url_link','parent'], 'safe'],
         ];
     }
 
