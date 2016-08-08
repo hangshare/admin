@@ -43,12 +43,9 @@ class CategoryController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new CategorySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $menu = Category::find()->all();
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'menu' => $menu
         ]);
     }
 
