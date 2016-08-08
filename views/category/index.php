@@ -40,11 +40,27 @@ $articlesurl = Yii::t('app', 'articles-url');
                         <li <?php if (isset($mData['sub'])): ?><?php endif; ?>>
                             <a href="<?= "https://www.hangshare.com/articles/{$mData['url']}" ?>"><?= $mData['title'] ?></a>
                             <?= Html::a(' (Edit)', ['update','id'=>$mData['id']])?>
+                            <?=
+                            Html::a(' (delete)', ['delete','id'=>$mData['id']], [
+                                'data' => [
+                                    'confirm' => 'Are you sure you want to delete the category?',
+                                    'method' => 'post',
+                                ]
+                            ])
+                            ?>
                             <?php if (isset($mData['sub'])): ?>
                                 <ul class="supdropdown">
                                     <?php foreach ($mData['sub'] as $submenu) : ?>
                                         <li><?php echo Html::a($submenu['title'], "https://www.hangshare.com/articles/{$mData['url']}/{$submenu['url']}"); ?>
                                             <?= Html::a(' (Edit)', ['update','id'=>$submenu['id']])?>
+                                            <?=
+                                            Html::a(' (delete)', ['delete','id'=>$submenu['id']], [
+                                                'data' => [
+                                                    'confirm' => 'Are you sure you want to delete the category?',
+                                                    'method' => 'post',
+                                                ]
+                                            ])
+                                            ?>
                                         </li>
                                     <?php endforeach; ?>
                                 </ul>
@@ -60,21 +76,28 @@ $articlesurl = Yii::t('app', 'articles-url');
                     <?php if ($mData['lang'] == 'ar') : ?>
                         <li <?php if (isset($mData['sub'])): ?><?php endif; ?>>
                             <a href="<?= "https://www.hangshare.com/مواضيع/{$mData['url']}" ?>"><?= $mData['title'] ?></a>
-                            <?php
-                            //echo
-//                            Html::a('(delete)', 'delete', [
-//                                'data' => [
-//                                    'confirm' => 'Are you sure you want to delete the category?',
-//                                    'method' => 'post',
-//                                ]
-//                            ])
-                            ?>
                             <?= Html::a(' (Edit)', ['update','id'=>$mData['id']])?>
+                            <?=
+                            Html::a(' (delete)', ['delete','id'=>$mData['id']], [
+                                'data' => [
+                                    'confirm' => 'Are you sure you want to delete the category?',
+                                    'method' => 'post',
+                                ]
+                            ])
+                            ?>
                             <?php if (isset($mData['sub'])): ?>
                                 <ul class="supdropdown">
                                     <?php foreach ($mData['sub'] as $submenu) : ?>
                                         <li><?php echo Html::a($submenu['title'], "https://www.hangshare.com/مواضيع/{$mData['url']}/{$submenu['url']}"); ?>
                                             <?= Html::a(' (Edit)', ['update','id'=>$submenu['id']]) ?>
+                                            <?=
+                                            Html::a(' (delete)', ['delete','id'=>$submenu['id']], [
+                                                'data' => [
+                                                    'confirm' => 'Are you sure you want to delete the category?',
+                                                    'method' => 'post',
+                                                ]
+                                            ])
+                                            ?>
                                         </li>
                                     <?php endforeach; ?>
                                 </ul>
