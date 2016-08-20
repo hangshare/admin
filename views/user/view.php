@@ -101,7 +101,7 @@ $this->title = $model->name;
                                 <li><b> Location : </b>
                                     <?php
                                     if (isset($model->country) && $model->country != 0 && isset($model->location))
-                                        echo $model->location->name_ar;
+                                        echo $model->location->name;
                                     else
                                         echo 'Not Spesified';
                                     ?></li>

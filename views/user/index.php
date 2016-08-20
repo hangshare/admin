@@ -128,7 +128,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     if ($data->country == 0 || !isset($data->location))
                                         return '<i> غير محدد</i>';
 
-                                    return $data->location->name_ar;
+                                    return $data->location->name;
                                 },
                                 'filter' => Html::dropDownList('UserSearch[country]', '', ArrayHelper::map(Country:: find()->all(), 'id', 'name'), ['prompt' => ''])
                             ],

@@ -19,8 +19,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'name_ar') ?>
-
     <?= $form->field($model, 'code') ?>
 
     <?= $form->field($model, 'price') ?>

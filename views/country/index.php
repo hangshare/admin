@@ -64,11 +64,11 @@ $regions = Region::find()->all();
                 }
                     ],
                     [
-                        'attribute' => 'name_ar',
+                        'attribute' => 'name',
                         'label' => 'Name Arabic',
                         'format' => 'raw',
                         'value' => function ($data) {
-                            return Html::textInput('name_ar', $data->name_ar, ['rel' => $data->id, 'class' => 'country_js']);
+                            return Html::textInput('name', $data->name, ['rel' => $data->id, 'class' => 'country_js']);
                         }
                             ],
                             [
