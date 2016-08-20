@@ -9,7 +9,6 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
- * @property string $name_ar
  * @property string $code
  * @property double $price
  * @property integer $regionId
@@ -31,10 +30,10 @@ class Country extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'name_ar', 'code', 'price', 'regionId'], 'required'],
+            [['name', 'code', 'price', 'regionId'], 'required'],
             [['price'], 'number'],
             [['regionId', 'published'], 'integer'],
-            [['name', 'name_ar'], 'string', 'max' => 100],
+            [['name'], 'string', 'max' => 100],
             [['code'], 'string', 'max' => 3]
         ];
     }
