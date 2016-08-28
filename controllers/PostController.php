@@ -277,7 +277,7 @@ class PostController extends Controller
             '__postTitle__' => $deleted_post['title'],
         ], 'ar');
 
-        return $this->redirect(['index']);
+        return $this->redirect(['approval']);
     }
 
     /**
