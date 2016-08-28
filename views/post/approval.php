@@ -56,23 +56,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{approve}{delete}',
                 'buttons' => [
                     'approve' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-adjust"></span> Approve', ['post/aprovedpost','id'=>$model->id], [
-                            'style'=>'margin-top:15px;',
+                        return Html::a('<span class="glyphicon glyphicon-adjust"></span> Approve', ['post/aprovedpost', 'id' => $model->id], [
+                            'style' => 'margin-top:15px;',
                             'class' => 'btn btn-danger btn-xs',
-                            'data'=>[
+                            'data' => [
                                 'method' => 'post',
-                                'params'=>['id'=>$model->id]
+                                'params' => ['id' => $model->id]
                             ]
                         ]);
                     },
                     'delete' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-trash"></span> Delete', ['post/delete'], [
+                        return Html::a('<span class="glyphicon glyphicon-trash"></span> Delete', ['post/delete', 'id' => $model->id], [
                             'class' => 'btn btn-danger btn-xs',
-                            'style'=>'margin-top:15px;',
-                            'data'=>[
+                            'style' => 'margin-top:15px;',
+                            'data' => [
                                 'method' => 'post',
-                                'confirm' => 'Are you sure?',
-                                'params'=>['id'=>$model->id],
+                                'confirm' => 'Are you sure?'
                             ]
                         ]);
                     },
