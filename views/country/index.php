@@ -17,8 +17,8 @@ $goldPrice = SysValues::findOne(['key' => 'gold_view_price']);
 $regions = Region::find()->all();
 ?>
 <div class="btn-group pull-right">
-    <a href="<?= Yii::$app->urlManager->createUrl('//countrys/?lang=ar'); ?>" class="btn <?php if (!isset($_GET['lang']) || $_GET['lang'] == 'ar'): ?> btn-primary <?php else : ?> btn-default <?php endif; ?>">Arabic</a>
-    <a href="<?= Yii::$app->urlManager->createUrl('//countrys/?lang=en'); ?>" class="btn <?php if (isset($_GET['lang']) && $_GET['lang'] == 'en'): ?> btn-primary <?php else : ?> btn-default <?php endif; ?>">Englsih</a>
+    <a href="<?= Yii::$app->urlManager->createUrl('//countrys?CountrySearch[lang]=ar'); ?>" class="btn <?php if (!isset($_GET['lang']) || $_GET['lang'] == 'ar'): ?> btn-primary <?php else : ?> btn-default <?php endif; ?>">Arabic</a>
+    <a href="<?= Yii::$app->urlManager->createUrl('//countrys?CountrySearch[lang]=en'); ?>" class="btn <?php if (isset($_GET['lang']) && $_GET['lang'] == 'en'): ?> btn-primary <?php else : ?> btn-default <?php endif; ?>">Englsih</a>
 </div>
 
 <div class="country-index">
