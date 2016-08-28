@@ -7,10 +7,12 @@ use yii\base\Component;
 use app\models\EmailTemplate;
 use app\models\User;
 use app\models\UserEmail;
+
 require Yii::$app->vendorPath . '/autoload.php';
 use Aws\Ses\SesClient;
 
-class AwsEmail extends Component {
+class AwsEmail extends Component
+{
 
     private static $__accessKey = 'AKIAJ3JZA2TENDIDQTBQ';
     private static $__secretKey = '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';
@@ -29,23 +31,24 @@ class AwsEmail extends Component {
      * use $result->success to check if it was successful
      * use $result->message_id to check later with Amazon for further processing
      * use $result->result_text to look for error text if the task was not successful
-     * 
+     *
      * @param type $to - individual address or array of email addresses
      * @param type $subject - UTF-8 text for the subject line
      * @param type $body - Text for the email
      * @param type $from - email address of the sender (Note: must be validated with AWS as a sender)
      * @return \ResultHelper
      */
-    public static function deliver_mail_with_attachment($to, $subject, $body, $from, &$attachment = "", $attachment_name = "doc.jpg", $attachment_type = "image/jpg", $is_file = false, $encoding = "base64", $file_arr = null) {
+    public static function deliver_mail_with_attachment($to, $subject, $body, $from, &$attachment = "", $attachment_name = "doc.jpg", $attachment_type = "image/jpg", $is_file = false, $encoding = "base64", $file_arr = null)
+    {
         $result = new ResultHelper();
         //get the client ready
         $client = SesClient::factory(array(
-                    'credentials' => array(
-                        'key' => self::$__accessKey,
-                        'secret' => self::$__secretKey,
-                    ),
-                    'region' => 'us-east-1',
-                    'version' => '2010-12-01'
+            'credentials' => array(
+                'key' => self::$__accessKey,
+                'secret' => self::$__secretKey,
+            ),
+            'region' => 'us-east-1',
+            'version' => '2010-12-01'
         ));
         //build the message
         if (is_array($to)) {
@@ -54,60 +57,60 @@ class AwsEmail extends Component {
             $to_str = $to;
         }
         $msg = "To: $to_str" . self::LINEBR;
-        $msg .="From: $from" . self::LINEBR;
+        $msg .= "From: $from" . self::LINEBR;
         //in case you have funny characters in the subject
         $subject = mb_encode_mimeheader($subject, 'UTF-8');
-        $msg .="Subject: $subject" . self::LINEBR;
-        $msg .="MIME-Version: 1.0" . self::LINEBR;
-        $msg .="Content-Type: multipart/alternative;" . self::LINEBR;
+        $msg .= "Subject: $subject" . self::LINEBR;
+        $msg .= "MIME-Version: 1.0" . self::LINEBR;
+        $msg .= "Content-Type: multipart/alternative;" . self::LINEBR;
         $boundary = uniqid("_Part_" . time(), true); //random unique string
-        $msg .=" boundary=\"$boundary\"" . self::LINEBR;
-        $msg .=self::LINEBR;
+        $msg .= " boundary=\"$boundary\"" . self::LINEBR;
+        $msg .= self::LINEBR;
         //now the actual message
-        $msg .="--$boundary" . self::LINEBR;
+        $msg .= "--$boundary" . self::LINEBR;
         //first, the plain text
-        $msg .="Content-Type: text/plain; charset=utf-8" . self::LINEBR;
-        $msg .="Content-Transfer-Encoding: 7bit" . self::LINEBR;
-        $msg .=self::LINEBR;
-        $msg .=strip_tags($body);
-        $msg .=self::LINEBR;
+        $msg .= "Content-Type: text/plain; charset=utf-8" . self::LINEBR;
+        $msg .= "Content-Transfer-Encoding: 7bit" . self::LINEBR;
+        $msg .= self::LINEBR;
+        $msg .= strip_tags($body);
+        $msg .= self::LINEBR;
         //now, the html text
-        $msg .="--$boundary" . self::LINEBR;
-        $msg .="Content-Type: text/html; charset=utf-8" . self::LINEBR;
-        $msg .="Content-Transfer-Encoding: 7bit" . self::LINEBR;
-        $msg .=self::LINEBR;
-        $msg .=$body;
-        $msg .=self::LINEBR;
+        $msg .= "--$boundary" . self::LINEBR;
+        $msg .= "Content-Type: text/html; charset=utf-8" . self::LINEBR;
+        $msg .= "Content-Transfer-Encoding: 7bit" . self::LINEBR;
+        $msg .= self::LINEBR;
+        $msg .= $body;
+        $msg .= self::LINEBR;
         //add attachments
         if (!empty($attachment)) {
-            $msg .="--$boundary" . self::LINEBR;
-            $msg .="Content-Transfer-Encoding: base64" . self::LINEBR;
+            $msg .= "--$boundary" . self::LINEBR;
+            $msg .= "Content-Transfer-Encoding: base64" . self::LINEBR;
             $clean_filename = mb_substr($attachment_name, 0, self::MAX_ATTACHMENT_NAME_LEN);
-            $msg .="Content-Type: $attachment_type; name=$clean_filename;" . self::LINEBR;
-            $msg .="Content-Disposition: attachment; filename=$clean_filename;" . self::LINEBR;
-            $msg .=self::LINEBR;
-            $msg .=base64_encode($attachment);
+            $msg .= "Content-Type: $attachment_type; name=$clean_filename;" . self::LINEBR;
+            $msg .= "Content-Disposition: attachment; filename=$clean_filename;" . self::LINEBR;
+            $msg .= self::LINEBR;
+            $msg .= base64_encode($attachment);
             //only put this mark on the last entry
             if (!empty($file_arr))
-                $msg .="==" . self::LINEBR;
-            $msg .="--$boundary";
+                $msg .= "==" . self::LINEBR;
+            $msg .= "--$boundary";
         }
         if (!empty($file_arr) && is_array($file_arr)) {
             foreach ($file_arr as $file) {
-                $msg .="Content-Transfer-Encoding: base64" . self::LINEBR;
+                $msg .= "Content-Transfer-Encoding: base64" . self::LINEBR;
                 $clean_filename = mb_substr($attachment_name, 0, self::MAX_ATTACHMENT_NAME_LEN);
-                $msg .="Content-Type: application/octet-stream; name=$clean_filename;" . self::LINEBR;
-                $msg .="Content-Disposition: attachment; filename=$clean_filename;" . self::LINEBR;
-                $msg .=self::LINEBR;
-                $msg .=base64_encode($attachment);
+                $msg .= "Content-Type: application/octet-stream; name=$clean_filename;" . self::LINEBR;
+                $msg .= "Content-Disposition: attachment; filename=$clean_filename;" . self::LINEBR;
+                $msg .= self::LINEBR;
+                $msg .= base64_encode($attachment);
                 //only put this mark on the last entry
                 if (!empty($file_arr))
-                    $msg .="==" . self::LINEBR;
-                $msg .="--$boundary";
+                    $msg .= "==" . self::LINEBR;
+                $msg .= "--$boundary";
             }
         }
         //close email
-        $msg .="--" . self::LINEBR;
+        $msg .= "--" . self::LINEBR;
 
         //now send the email out
         try {
@@ -120,7 +123,6 @@ class AwsEmail extends Component {
                 ),
                 'ReturnPathArn' => $from,
             ));
-
 
 
             if ($ses_result) {
@@ -145,20 +147,21 @@ class AwsEmail extends Component {
         return strtolower($domain);
     }
 
-    public static function SendMail($to, $subject, $body, $from = 'info@hangshare.com') {
+    public static function SendMail($to, $subject, $body, $from = 'info@hangshare.com')
+    {
 
-        $allowed_domians = ['hotmail.com','gmail.com','live.com','yahoo.com','outlook.com','yahoo.fr','outlook.fr','hotmail.fr'];
-        if (!filter_var($to, FILTER_VALIDATE_EMAIL) || !in_array(self::getDomainFromEmail($to), $allowed_domians)){
+        $allowed_domians = ['hotmail.com', 'gmail.com', 'live.com', 'yahoo.com', 'outlook.com', 'yahoo.fr', 'outlook.fr', 'hotmail.fr'];
+        if (!filter_var($to, FILTER_VALIDATE_EMAIL) || !in_array(self::getDomainFromEmail($to), $allowed_domians)) {
             return false;
         }
 
         $client = SesClient::factory(array(
-                    'credentials' => array(
-                        'key' => self::$__accessKey,
-                        'secret' => self::$__secretKey,
-                    ),
-                    'region' => 'us-east-1',
-                    'version' => '2010-12-01'
+            'credentials' => array(
+                'key' => self::$__accessKey,
+                'secret' => self::$__secretKey,
+            ),
+            'region' => 'us-east-1',
+            'version' => '2010-12-01'
         ));
         try {
             $emailSentId = $client->sendEmail(array(
@@ -190,26 +193,32 @@ class AwsEmail extends Component {
         }
     }
 
-    public static function queueUser($userId, $type, $params = []) {
-        $email = EmailTemplate::find()->where("id = {$type}")->one();
+    public static function queueUser($userId, $type, $params = [], $lang = 'ar')
+    {
+        $email = EmailTemplate::find()->where("code = '{$type}' AND lang = '{$lang}'")->one();
         $user = User::find()->where("id = {$userId}")->one();
-        if (filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
+        $name = $user->name;
+        $email_to = $user->email;
+        if (filter_var($email_to, FILTER_VALIDATE_EMAIL)) {
             $key = md5(microtime() . rand());
             $userEmail = new UserEmail;
             $userEmail->userId = $userId;
             $userEmail->emailId = $type;
             $userEmail->key = $key;
+            $userEmail->opened_at = 0;
             $userEmail->save();
-            $params['__user_name__ '] = $user->name;
+            $params['__user_name__ '] = $name;
             $body = strtr($email->body, $params);
-            $body.="<img src='http://www.hangshare.com/site/email/?id={$key}' width='1' height='1' />";
-            self::SendMail($user->email, $email->subject, $body);
+            $body .= "<img src='https://www.hangshare.com/site/email/{$key}/' width='1' height='1' />";
+            self::SendMail($email_to, $email->subject, $body);
         }
     }
 
+
 }
 
-class ResultHelper {
+class ResultHelper
+{
 
     public $success = true;
     public $result_text = "";
