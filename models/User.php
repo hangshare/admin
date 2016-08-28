@@ -27,25 +27,28 @@ use Yii;
  * @property UserStats $userStats
  * @property UserTransactions[] $userTransactions
  */
-class User extends \yii\db\ActiveRecord {
+class User extends \yii\db\ActiveRecord
+{
 
-    
+
     //public $transfer_type;
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'user';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['name', 'email', 'image', 'paypal_email', 'password_hash', 'bio', 'gender', 'dob', 'country', 'phone', 'password_reset_token', 'scId', 'type'], 'required'],
-            [['gender', 'country', 'type', 'plan','transfer_type'], 'integer'],
-            [['dob', 'created_at','transfer_type'], 'safe'],
+            [['gender', 'country', 'type', 'plan', 'transfer_type', 'deleted'], 'integer'],
+            [['dob', 'created_at', 'transfer_type'], 'safe'],
             [['name', 'email'], 'string', 'max' => 50],
             [['image', 'paypal_email', 'password_hash'], 'string', 'max' => 250],
             [['bio'], 'string', 'max' => 600],
@@ -59,7 +62,8 @@ class User extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => 'ID',
             'name' => 'Name',
@@ -76,34 +80,39 @@ class User extends \yii\db\ActiveRecord {
             'scId' => 'Sc ID',
             'type' => 'Type',
             'created_at' => 'Created At',
+            'deleted' => 'deleted'
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getLocation() {
+    public function getLocation()
+    {
         return $this->hasOne(Country::className(), ['id' => 'country']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUserSettings() {
+    public function getUserSettings()
+    {
         return $this->hasOne(UserSettings::className(), ['userId' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUserStats() {
+    public function getUserStats()
+    {
         return $this->hasOne(UserStats::className(), ['userId' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUserTransactions() {
+    public function getUserTransactions()
+    {
         return $this->hasMany(UserTransactions::className(), ['userId' => 'id']);
     }
 
