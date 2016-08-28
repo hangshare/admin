@@ -23,7 +23,7 @@ class PostSearch extends Post
     public function rules()
     {
         return [
-            [['id', 'userId', 'type', 'featured'], 'integer'],
+            [['id', 'userId', 'type', 'featured', 'published'], 'integer'],
             [['cover', 'title', 'created_at', 'featured', 'user', 'urlTitle'], 'safe'],
         ];
     }
@@ -112,6 +112,7 @@ class PostSearch extends Post
 
         $query->andFilterWhere([
             'post.id' => $this->id,
+            'post.published' => $this->published,
             'post.userId' => $this->userId,
             'post.type' => $this->type,
             'post.created_at' => $this->created_at,
