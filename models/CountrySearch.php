@@ -55,6 +55,8 @@ class CountrySearch extends Country
             // $query->where('0=1');
             return $dataProvider;
         }
+        if(empty($this->lang))
+            $this->lang = 'ar';
 
         $query->andFilterWhere([
             'id' => $this->id,
