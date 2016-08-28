@@ -16,6 +16,11 @@ $defaultPrice = SysValues::findOne(['key' => 'default_view_price']);
 $goldPrice = SysValues::findOne(['key' => 'gold_view_price']);
 $regions = Region::find()->all();
 ?>
+<div class="btn-group">
+    <a href="<?php Yii::$app->urlManager->createUrl('//countrys/?lang=ar'); ?>" class="btn <?php if (!isset($_GET['lang']) || $_GET['lang'] == 'ar'): ?> btn-primary <?php else : ?> btn-default <?php endif; ?>">Arabic</a>
+    <a href="<?php Yii::$app->urlManager->createUrl('//countrys/?lang=en'); ?>" class="btn <?php if (isset($_GET['lang']) && $_GET['lang'] == 'en'): ?> btn-primary <?php else : ?> btn-default <?php endif; ?>">Englsih</a>
+</div>
+
 <div class="country-index">
     <h1>Region / Groups</h1>
     <div class="well">
