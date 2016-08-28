@@ -151,6 +151,25 @@ class PostController extends Controller
         exit();
     }
 
+
+    /**
+     * Lists all Post models.
+     * @return mixed
+     */
+    public function actionApproval()
+    {
+        $searchModel = new PostSearch();
+        $searchModel->published = 0;
+        $searchModel->deleted = 0;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('approval', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
     /**
      * Lists all Post models.
      * @return mixed
@@ -190,17 +209,18 @@ class PostController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionAprovedpost($id)
     {
-        $model = new Post();
+        $model = $this->findModel($id);
+        $model->published = 1;
+        $model->save(false);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+        AwsEmail::queueUser($model->userId, 'post_aproved', [
+            '__title__' => $model->title,
+            '__url__' => "https://www.hangshare.com/{$model->urlTitle}/"
+        ], 'ar');
+
+        return $this->redirect(['approval']);
     }
 
     /**
@@ -236,17 +256,15 @@ class PostController extends Controller
                 t.title,
                 t.userId,
                 stats.views
+                stats.profit
                 FROM post t LEFT JOIN post_stats stats on (stats.postId = t.id) 
                 where t.id={$id}")->queryOne();
 
         // DELETE POSTS
-        Yii::$app->db->createCommand("DELETE FROM post_stats where postId={$id}")->query();
-        Yii::$app->db->createCommand("DELETE FROM post_tag where postId={$id}")->query();
-        Yii::$app->db->createCommand("DELETE FROM post_body where postId={$id}")->query();
-        Yii::$app->db->createCommand("DELETE FROM post where id={$id}")->query();
+        Yii::$app->db->createCommand("UPDATE post SET deleted = 1 where id={$id}")->query();
         // DELETE POSTS
         //UPDATE USER STATS
-        $diffPrice = $deleted_post['views'] * .0005;
+        $diffPrice = $deleted_post['profit'];
         Yii::$app->db->createCommand("UPDATE user_stats SET
         post_views=post_views-{$deleted_post['views']},
         post_total_views=post_total_views-{$deleted_post['views']},
@@ -255,9 +273,9 @@ class PostController extends Controller
         available_amount=available_amount-{$diffPrice}
         WHERE userId={$deleted_post['userId']}")->query();
 
-        AwsEmail::queueUser($deleted_post['userId'], 2, [
+        AwsEmail::queueUser($deleted_post['userId'], 'post_deleted', [
             '__postTitle__' => $deleted_post['title'],
-        ]);
+        ], 'ar');
 
         return $this->redirect(['index']);
     }
