@@ -14,9 +14,11 @@ use yii\filters\AccessControl;
 /**
  * UsertransactionsController implements the CRUD actions for UserTransactions model.
  */
-class UsertransactionsController extends Controller {
+class UsertransactionsController extends Controller
+{
 
-    public function behaviors() {
+    public function behaviors()
+    {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -42,13 +44,14 @@ class UsertransactionsController extends Controller {
      * Lists all UserTransactions models.
      * @return mixed
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $searchModel = new UserTransactionsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -57,25 +60,27 @@ class UsertransactionsController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         $model = $this->findModel($id);
         if (isset($_POST['_csrf'])) {
             $model->image = $_POST['s3loc'];
             $model->paypal_transaction_Id = $_POST['paypal_transaction_Id'];
             $model->status = 1;
-            AwsEmail::queueUser('54', 6, [
+
+            AwsEmail::queueUser('54', 'money_received', [
                 '__amount__' => $model->amount,
                 '__image__' => $model->image,
-            ]);
-            AwsEmail::queueUser($model->userId, 6, [
+            ], 'ar');
+            AwsEmail::queueUser($model->userId, 'money_received', [
                 '__amount__' => $model->amount,
                 '__image__' => $model->image,
-            ]);
+            ], 'ar');
             $model->save();
             return $this->redirect(['view', 'id' => $id]);
         }
         return $this->render('update', [
-                    'model' => $model,
+            'model' => $model,
         ]);
     }
 
@@ -85,7 +90,8 @@ class UsertransactionsController extends Controller {
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -98,7 +104,8 @@ class UsertransactionsController extends Controller {
      * @return UserTransactions the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id) {
+    protected function findModel($id)
+    {
         if (($model = UserTransactions::findOne($id)) !== null) {
             return $model;
         } else {
