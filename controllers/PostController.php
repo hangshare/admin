@@ -177,6 +177,8 @@ class PostController extends Controller
     public function actionIndex()
     {
         $searchModel = new PostSearch();
+        $searchModel->deleted = 0;
+        $searchModel->published = 1;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
