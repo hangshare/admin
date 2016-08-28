@@ -65,6 +65,7 @@ class CronController extends Controller
             foreach ($results as $id => $views) {
                 $country = [];
                 $total_views = 0;
+                $lang = $views['lang'];
                 foreach ($views as $hash => $view) {
                     $vie = Yii::$app->db->createCommand("SELECT 1 FROM `post_view` WHERE hash = '{$hash}'")->queryScalar();
                     if (!$vie) {
@@ -89,10 +90,9 @@ class CronController extends Controller
                 foreach ($country as $key => $num) {
                     $country_price = $memcached->get('country_price_' . $key);
                     if ($country_price == false) {
-                        $country_price = Yii::$app->db->createCommand("SELECT id ,code, price, regionId FROM `country` WHERE code = '{$key}' AND lang = 'ar'")->queryOne();
+                        $country_price = Yii::$app->db->createCommand("SELECT id ,code, price, regionId FROM `country` WHERE code = '{$key}' AND lang = '{$lang}'")->queryOne();
                         $memcached->set('country_price_' . $key, $country_price);
                     }
-                    var_dump($country_price);
                     if ($country_price['price'] == '-1') { // Default
                         $default_price = Yii::$app->db->createCommand("SELECT `value` FROM `sys_values` t WHERE t.`key` = 'default_view_price'")->queryScalar();
                         $cu_pr = $num * $default_price;
@@ -113,7 +113,6 @@ class CronController extends Controller
                 }
                 if (isset($ins)) {
                     $qar = implode(', ', $insq);
-
                     Yii::$app->db->createCommand("
                     INSERT INTO post_view_country (`postId` , `countryId` , `views` , `income`)
                     VALUES {$qar} ;")->query();
