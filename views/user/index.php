@@ -48,6 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'total_amount',
                 'format' => 'raw',
+                'contentOptions'=>['style'=>'max-width: 50px;'],
                 'value' => function ($data) {
                     if (isset($data->userStats)) {
                         return $data->userStats->total_amount;
@@ -59,6 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'available_amount',
                 'format' => 'raw',
+                'contentOptions'=>['style'=>'max-width: 50px;'],
                 'value' => function ($data) {
                     if (isset($data->userStats)) {
                         return $data->userStats->available_amount;
@@ -70,6 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'cantake_amount',
                 'format' => 'raw',
+                'contentOptions'=>['style'=>'max-width: 50px;'],
                 'value' => function ($data) {
                     if (isset($data->userStats)) {
                         return $data->userStats->cantake_amount;
@@ -81,6 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'post_count',
                 'format' => 'raw',
+                'contentOptions'=>['style'=>'max-width: 20px;'],
                 'value' => function ($data) {
                     if (isset($data->userStats))
                         return $data->userStats->post_count;
@@ -114,6 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'country',
                 'format' => 'raw',
+                'contentOptions'=>['style'=>'max-width: 50px;'],
                 'value' => function ($data) {
                     if ($data->country == 0 || !isset($data->location))
                         return '<i> غير محدد</i>';
