@@ -62,74 +62,66 @@ $regions = Region::find()->all();
                 'value' => function ($data) {
                     return Html::textInput('name', $data->name, ['rel' => $data->id, 'class' => 'country_js']);
                 }
-                    ],
-                    [
-                        'attribute' => 'name',
-                        'label' => 'Name Arabic',
-                        'format' => 'raw',
-                        'value' => function ($data) {
-                            return Html::textInput('name', $data->name, ['rel' => $data->id, 'class' => 'country_js']);
-                        }
-                            ],
-                            [
-                                'attribute' => 'code',
-                                'label' => 'Code',
-                                'format' => 'raw',
-                                'value' => function ($data) {
-                                    return Html::textInput('code', $data->code, ['rel' => $data->id, 'class' => 'country_js']);
-                                }
-                                    ],
-                                    [
-                                        'attribute' => 'price',
-                                        'label' => 'Price',
-                                        'format' => 'raw',
-                                        'value' => function ($data) {
-                                            if ($data->price >= 0) {
-                                                $type = '-3';
-                                            } else {
-                                                $type = $data->price;
-                                            }
-                                            $html = Html::dropDownList('priceType[]', $type, [
-                                                        '-1' => 'Default',
-                                                        '-2' => 'Region',
-                                                        '-3' => 'Specific',
-                                                            ], ['prompt' => '', 'rel' => $data->id, 'class' => 'priceType']);
-                                            if ($data->price >= 0) {
-                                                $html.=Html::textInput('price', $data->price, ['id' => 'price-' . $data->id, 'rel' => $data->id, 'class' => 'country_js']);
-                                            } else {
-                                                $html.=Html::hiddenInput('price', $data->price, ['id' => 'price-' . $data->id, 'rel' => $data->id, 'class' => 'country_js']);
-                                            }
+            ],
+            [
+                'attribute' => 'code',
+                'label' => 'Code',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    return Html::textInput('code', $data->code, ['rel' => $data->id, 'class' => 'country_js']);
+                }
+            ],
+            [
+                'attribute' => 'price',
+                'label' => 'Price',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    if ($data->price >= 0) {
+                        $type = '-3';
+                    } else {
+                        $type = $data->price;
+                    }
+                    $html = Html::dropDownList('priceType[]', $type, [
+                        '-1' => 'Default',
+                        '-2' => 'Region',
+                        '-3' => 'Specific',
+                    ], ['prompt' => '', 'rel' => $data->id, 'class' => 'priceType']);
+                    if ($data->price >= 0) {
+                        $html .= Html::textInput('price', $data->price, ['id' => 'price-' . $data->id, 'rel' => $data->id, 'class' => 'country_js']);
+                    } else {
+                        $html .= Html::hiddenInput('price', $data->price, ['id' => 'price-' . $data->id, 'rel' => $data->id, 'class' => 'country_js']);
+                    }
 
-                                            return $html;
-                                        }
-                                            ],
-                                            [
-                                                'attribute' => 'regionId',
-                                                'format' => 'raw',
-                                                'value' => function ($data) {
+                    return $html;
+                }
+            ],
+            [
+                'attribute' => 'regionId',
+                'format' => 'raw',
+                'value' => function ($data) {
 
-                                                    $region = Region::getDb()->cache(function ($db) {
-                                                                return Region::find()->all();
-                                                            }, 100);
+                    $region = Region::getDb()->cache(function ($db) {
+                        return Region::find()->all();
+                    }, 100);
 
-                                                    return Html::dropDownList('regionId', $data->regionId, ArrayHelper::map($region, 'id', 'name'), ['prompt' => 'Not Selected', 'rel' => $data->id, 'class' => 'country_js']);
-                                                },
-                                                        'filter' => Html::dropDownList('CountrySearch[regionId]', '', ArrayHelper::map(Region::find()->all(), 'id', 'name'), ['prompt' => ''])
-                                                    ],
-                                                    [
-                                                        'attribute' => 'published',
-                                                        'label' => 'Published',
-                                                        'format' => 'raw',
-                                                        'filter' => ['1' => 'Yas', '0' => 'No'],
-                                                        'value' => function ($data) {
-                                                    return Html::checkbox('published', $data->published, ['rel' => $data->id, 'class' => 'country_js']);
-                                                }
-                                                    ],
-                                                    [
-                                                        'class' => 'yii\grid\ActionColumn',
-                                                        'template' => '{delete}'
-                                                    ],
-                                                ],
-                                            ]);
-                                            ?>
+                    return Html::dropDownList('regionId', $data->regionId, ArrayHelper::map($region, 'id', 'name'), ['prompt' => 'Not Selected', 'rel' => $data->id, 'class' => 'country_js']);
+                },
+                'filter' => Html::dropDownList('CountrySearch[regionId]', '', ArrayHelper::map(Region::find()->all(), 'id', 'name'), ['prompt' => ''])
+            ],
+            [
+                'attribute' => 'published',
+                'label' => 'Published',
+                'format' => 'raw',
+                'filter' => ['1' => 'Yas', '0' => 'No'],
+                'value' => function ($data) {
+                    return Html::checkbox('published', $data->published, ['rel' => $data->id, 'class' => 'country_js']);
+                }
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{delete}'
+            ],
+        ],
+    ]);
+    ?>
 </div>
