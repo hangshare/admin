@@ -65,7 +65,12 @@ class CronController extends Controller
             foreach ($results as $id => $views) {
                 $country = [];
                 $total_views = 0;
-                $lang = $views['lang'];
+                if (!isset($views['lang'])) {
+                    $lang = 'ar';
+                } else {
+                    $lang = $views['lang'];
+                }
+
                 foreach ($views as $hash => $view) {
                     $vie = Yii::$app->db->createCommand("SELECT 1 FROM `post_view` WHERE hash = '{$hash}'")->queryScalar();
                     if (!$vie) {
