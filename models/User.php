@@ -80,7 +80,10 @@ class User extends \yii\db\ActiveRecord
             'scId' => 'Sc ID',
             'type' => 'Type',
             'created_at' => 'Created At',
-            'deleted' => 'deleted'
+            'deleted' => 'deleted',
+            'total_amount'=>'Total',
+            'available_amount'=>'Available',
+            'cantake_amount'=>'Can Take',
         ];
     }
 
