@@ -255,7 +255,7 @@ class PostController extends Controller
                 SELECT 
                 t.title,
                 t.userId,
-                stats.views
+                stats.views,
                 stats.profit
                 FROM post t LEFT JOIN post_stats stats on (stats.postId = t.id) 
                 where t.id={$id}")->queryOne();
