@@ -24,7 +24,7 @@ class UserSearch extends User
             [['id', 'gender', 'country', 'type'], 'integer'],
             [['name', 'email', 'image', 'paypal_email', 'password_hash',
                 'profile_views', 'post_total_views', 'post_count', 'available_amount',
-                'bio', 'dob', 'phone', 'password_reset_token', 'scId', 'created_at', 'gender', 'plan'], 'safe'],
+                'bio', 'dob', 'phone', 'password_reset_token', 'scId', 'created_at', 'gender', 'plan', 'deleted'], 'safe'],
         ];
     }
 
@@ -113,6 +113,7 @@ class UserSearch extends User
             'type' => $this->type,
             'created_at' => $this->created_at,
             'plan' => $this->plan,
+            'deleted' => $this->deleted,
         ]);
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'email', $this->email])
