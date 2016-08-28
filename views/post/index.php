@@ -24,7 +24,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'id',
+            [
+                'attribute' => 'cover',
+                'label' => 'Cover',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    $thump = Yii::$app->imageresize->thump($data->cover, 400, 250, 'crop');
+                    return Html::img($thump);
+                },
+            ],
             [
                 'attribute' => 'user',
                 'label' => 'User Name/ID',
