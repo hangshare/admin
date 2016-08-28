@@ -81,7 +81,7 @@ class User extends \yii\db\ActiveRecord
             'type' => 'Type',
             'created_at' => 'Created At',
             'deleted' => 'deleted',
-            'total_amount'=>'Total',
+            'total_amount'=>'Total Amount',
             'available_amount'=>'Available',
             'cantake_amount'=>'Can Take',
         ];
