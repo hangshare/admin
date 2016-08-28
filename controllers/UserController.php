@@ -250,16 +250,10 @@ class UserController extends Controller {
         }
         $postsarray = implode(', ', $arr);
         if (!empty($postsarray)) {
-            Yii::$app->db->createCommand("DELETE FROM post_body where postId IN ({$postsarray})")->query();
-            Yii::$app->db->createCommand("DELETE FROM post_stats where postId IN ({$postsarray})")->query();
-            Yii::$app->db->createCommand("DELETE FROM post_tag where postId IN ({$postsarray})")->query();
-            Yii::$app->db->createCommand("DELETE FROM post where userId = {$id}")->query();
+            Yii::$app->db->createCommand("UPDATE post set deleted = 1 where userId = {$id}")->query();
         }
 
-        Yii::$app->db->createCommand("DELETE FROM user_settings where userId = {$id}")->query();
-        Yii::$app->db->createCommand("DELETE FROM user_stats where userId = {$id}")->query();
-        Yii::$app->db->createCommand("DELETE FROM user_transactions where userId = {$id}")->query();
-        Yii::$app->db->createCommand("DELETE FROM user where id = {$id}")->query();
+        Yii::$app->db->createCommand("UPDATE user SET deleted = 1 where id = {$id}")->query();
 
         return $this->redirect(['index']);
     }
