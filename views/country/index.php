@@ -15,7 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 $defaultPrice = SysValues::findOne(['key' => 'default_view_price']);
 $goldPrice = SysValues::findOne(['key' => 'gold_view_price']);
 $regions = Region::find()->all();
-var_dump($_GET);
 ?>
 <div class="btn-group pull-right">
     <a href="<?= Yii::$app->urlManager->createUrl('//countrys?CountrySearch[lang]=ar'); ?>" class="btn <?php if (!isset($_GET['CountrySearch']['lang']) || $_GET['CountrySearch']['lang'] == 'ar'): ?> btn-primary <?php else : ?> btn-default <?php endif; ?>">Arabic</a>
