@@ -99,7 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'deleted',
                 'format' => 'raw',
                 'value' => function ($data) {
-                    return $data->plan == 1 ? 'Banded' : 'Active';
+                    return $data->deleted == 1 ? 'Banded' : 'Active';
                 },
                 'filter' => Html::dropDownList('UserSearch[deleted]', '', ['1' => 'Banded', '0' => 'Active'], ['prompt' => ''])
             ],
