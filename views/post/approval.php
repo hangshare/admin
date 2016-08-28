@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]);
                     },
                     'update' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-trash"></span> Delete', ['post/update', 'id' => $model->id], [
+                        return Html::a('<span class="glyphicon glyphicon-trash"></span> Update', ['post/update', 'id' => $model->id], [
                             'class' => 'btn btn-warning btn-xs',
                             'style' => 'margin-top:15px;',
                         ]);
