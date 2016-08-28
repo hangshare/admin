@@ -30,7 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function ($data) {
                     $thump = Yii::$app->imageresize->thump($data->cover, 400, 250, 'crop');
-                    return Html::img($thump);
+                    $thump_full = str_replace('/400x250-crop', '', $thump);
+                    return Html::a(Html::img($thump, ['width' => 150, 'alt' => 'image']), $thump_full, ['target' => '_blank']);
                 },
             ],
             [
