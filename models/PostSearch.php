@@ -113,6 +113,7 @@ class PostSearch extends Post
         $query->andFilterWhere([
             'post.id' => $this->id,
             'post.published' => $this->published,
+            'post.deleted' => $this->deleted,
             'post.userId' => $this->userId,
             'post.type' => $this->type,
             'post.created_at' => $this->created_at,
