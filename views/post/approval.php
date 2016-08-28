@@ -56,16 +56,30 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{approve}{delete}',
                 'buttons' => [
                     'approve' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-adjust"></span> Approve', $url, [
+                        return Html::a('', $url, [
                             'title' => Yii::t('app', 'Approve'),
                             'class' => 'btn btn-primary btn-xs',
                         ]);
+                        return Html::a('<span class="glyphicon glyphicon-adjust"></span> Approve', ['post/aprovedpost'], [
+                            'data'=>[
+                                'method' => 'post',
+                                'confirm' => 'Are you sure?',
+                                'params'=>['id'=>$model->id],
+                                'class' => 'btn btn-danger btn-xs',
+                                'style'=>'margin-top:15px;'
+                            ]
+                        ]);
+
                     },
                     'delete' => function ($url, $model) {
-                        return  Html::a('<span class="glyphicon glyphicon-trash"></span> Delete', $url, [
-                            'title' => Yii::t('app', 'Delete'),
-                            'class' => 'btn btn-danger btn-xs',
-                            'style'=>'margin-top:20px;'
+                        return Html::a('<span class="glyphicon glyphicon-trash"></span> Delete', ['post/delete'], [
+                            'data'=>[
+                                'method' => 'post',
+                                'confirm' => 'Are you sure?',
+                                'params'=>['id'=>$model->id],
+                                'class' => 'btn btn-danger btn-xs',
+                                'style'=>'margin-top:15px;'
+                            ]
                         ]);
                     },
                 ]
