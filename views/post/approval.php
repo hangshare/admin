@@ -53,12 +53,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at',
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{approve}{delete}',
+                'template' => '{approve}{delete}{update}',
                 'buttons' => [
                     'approve' => function ($url, $model) {
                         return Html::a('<span class="glyphicon glyphicon-adjust"></span> Approve', ['post/aprovedpost', 'id' => $model->id], [
                             'style' => 'margin-top:15px;',
-                            'class' => 'btn btn-danger btn-xs',
+                            'class' => 'btn btn-primary btn-xs',
                             'data' => [
                                 'method' => 'post',
                                 'params' => ['id' => $model->id]
@@ -73,6 +73,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'method' => 'post',
                                 'confirm' => 'Are you sure?'
                             ]
+                        ]);
+                    },
+                    'update' => function ($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-trash"></span> Delete', ['post/update', 'id' => $model->id], [
+                            'class' => 'btn btn-warning btn-xs',
+                            'style' => 'margin-top:15px;',
                         ]);
                     },
                 ]
