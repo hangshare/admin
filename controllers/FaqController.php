@@ -107,7 +107,7 @@ class FaqController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if ($model->email) {
                 if (!empty($model->userId) && $model->userId != 0) {
-                    AwsEmail::queueUser($model->userId['userId'], 'faq_answer', [
+                    AwsEmail::queueUser($model->userId, 'faq_answer', [
                         '__Qu__' => $model->question,
                         '__An__' => $model->answer,
                     ], 'ar');
