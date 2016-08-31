@@ -55,7 +55,7 @@ class CronController extends Controller
                         $model->save(false);
                         $json = json_decode($model->cover);
                     }
-                    Yii::$app->imageresize->PatchResize('hangshare-media', $json->image, 'post')    ;
+                    Yii::$app->imageresize->PatchResize('hangshare-media', $json->image, 'post');
                 }
             }
             $pr_file = fopen($file, "w") or die("Una    ble to open file!");
