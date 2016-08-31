@@ -57,13 +57,15 @@ class CronController extends Controller
                         $json = json_decode($model->cover);
                     }
                     Yii::$app->imageresize->PatchResize('hangshare-media', $json->image, 'post');
+
+                    $pr_file = fopen($file, "w") or die("Unable to open file!");
+                    fwrite($pr_file, $post['id'] + 1);
+                    fclose($pr_file);
+
                 } else {
                     print 'No cover Image |||||||||||||||| : ' . $post['id'] . chr(10);
                 }
             }
-            $pr_file = fopen($file, "w") or die("Una    ble to open file!");
-            fwrite($pr_file, $post['id'] + 1);
-            fclose($pr_file);
         } else {
             print 'Exit' . chr(10);
         }
