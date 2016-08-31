@@ -13,6 +13,12 @@ return [
         'AwsEmail' => [
             'class' => 'app\components\AwsEmail',
         ],
+        'imageresize' => [
+            'class' => 'app\components\Imageresize',
+        ],
+        'customs3' => [
+            'class' => 'app\components\Customs3',
+        ],
         'cache'=>array(
             'class' => 'yii\caching\MemCache',
             'servers'=>array(
@@ -21,6 +27,17 @@ return [
 //                array('host'=>'127.0.0.1', 'port'=>11211, 'weight'=>60),
             ),
         ),
+
+//        'cache' => [
+//            'class' => 'yii\caching\MemCache',
+//            'servers' => [
+//                [
+//                    'host' => 'localhost',
+//                    'port' => 11211,
+//                    'weight' => 100,
+//                ],
+//            ],
+//        ],
         'db' => [
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=main.cdb3bm2h7j5j.us-east-1.rds.amazonaws.com;port=3306;dbname=hangshare',
