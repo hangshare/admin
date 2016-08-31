@@ -18,10 +18,14 @@ $config = [
         'imageresize' => [
             'class' => 'app\components\Imageresize',
         ],
+        'customs3' => [
+            'class' => 'app\components\Customs3',
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'aswdsdcwsdwa',
         ],
+
         'cache' => [
             'class' => 'yii\caching\MemCache',
             'servers' => [
