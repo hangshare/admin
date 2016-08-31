@@ -10,7 +10,8 @@ namespace app\commands;
 use Yii;
 use yii\console\Controller;
 use app\commands\User;
-use app\commands\Post;
+use app\models\Post;
+
 
 
 class CronController extends Controller
@@ -24,6 +25,47 @@ class CronController extends Controller
         Yii::$app->db->createCommand("TRUNCATE `hangshare`.`post_view`;")->query();
     }
 
+
+    public function actionThumpchecker()
+    {
+        $file = dirname(__FILE__) . "/../runtime/thumps.txt";
+        $pr_file = fopen($file, "r") or die("Unable to open file!");;
+        $projectId = fread($pr_file, filesize($file));
+        fclose($pr_file);
+        $projectId = (int)$projectId;
+        $lastId = Yii::$app->db->createCommand("SELECT MAX(id) FROM post")->queryScalar();
+        print 'Last id : ' . $projectId . chr(10);
+        if ($lastId > $projectId) {
+            $posts = Yii::$app->db->createCommand("SELECT id, cover FROM post where id >= {$projectId}  LIMIT 100")->queryAll();
+            foreach ($posts as $post) {
+                if (!empty($post['cover'])) {
+                    if (Yii::$app->imageresize->isJson($post['cover'])) {
+                        $json = json_decode($post['cover']);
+                    } else {
+                        $url = "https://s3-eu-west-1.amazonaws.com/hangshare-media/{$post['cover']}";
+                        list($width, $height) = @getimagesize($url);
+                        $jsnon_array = [];
+                        $jsnon_array['type'] = 's3';
+                        $jsnon_array['image'] = $post['cover'];
+                        $jsnon_array['bucket'] = 'hangshare-media';
+                        $jsnon_array['width'] = $width;
+                        $jsnon_array['height'] = $height;
+                        $model = Post::findOne(['id' => $post['id']]);
+                        $model->cover = json_encode($jsnon_array);
+                        $model->save(false);
+                        $json = json_decode($model->cover);
+                    }
+                    Yii::$app->imageresize->PatchResize('hangshare-media', $json->image, 'post')    ;
+                }
+            }
+            $pr_file = fopen($file, "w") or die("Una    ble to open file!");
+            fwrite($pr_file, $post['id'] + 1);
+            fclose($pr_file);
+        }else{
+            print 'Exit' . chr(10);
+        }
+    }
+
     public function actionDeservedamount()
     {
         \Yii::$app->db->createCommand("UPDATE `user_stats` SET `cantake_amount` = `cantake_amount`+`available_amount`,`available_amount`=0 WHERE `available_amount` >= 100")->execute();
@@ -33,7 +75,8 @@ class CronController extends Controller
                 WHERE (available_amount >= 50 OR cantake_amount != 0) AND `user`.`plan` = 1")->execute();
     }
 
-    public function actionGoldend()
+    public
+    function actionGoldend()
     {
         $time = time();
         $users = Yii::$app->db->createCommand("
@@ -54,7 +97,8 @@ class CronController extends Controller
         }
     }
 
-    public function actionCounter()
+    public
+    function actionCounter()
     {
         $memcached = new \Memcache();
         $memcached->addserver('hangshare.jhis0g.cfg.use1.cache.amazonaws.com');
@@ -135,7 +179,8 @@ class CronController extends Controller
     }
 
 
-    public function actionSitemap()
+    public
+    function actionSitemap()
     {
         $posts = Yii::$app->db->createCommand("SELECT t.id, t.title, t.urlTitle, t.created_at FROM  post t WHERE t.deleted = 0 ORDER BY t.id DESC;")->queryAll();
         $sitemap = new \DomDocument('1.0', 'UTF-8');
