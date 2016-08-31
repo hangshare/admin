@@ -125,9 +125,12 @@ class Imageresize extends Component
 
     public function PatchResize($bucket, $key, $type = 'post')
     {
+        print 'Start Resizing ... ' . chr(10);
         $path = $this->s3->downloadFile($bucket, $key);
+        print 'File Downloaded ... ' . chr(10);
         $array = "{$type}_sizes";
         foreach ($this->$array as $size) {
+            print 'Width : ' . $size['width'] . ' .... ' . 'Height : ' . $size['height'] . chr(10);
             $this->s3Resize($path, $size['width'], $size['height'], $size['method']);
         }
         @unlink($path);
