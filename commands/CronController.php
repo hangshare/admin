@@ -15,6 +15,16 @@ use app\models\Post;
 
 class CronController extends Controller
 {
+    public function actionSort(){
+        $sql = 'UPDATE `post` t SET  `sort` = (CASE WHEN t.score > 3 THEN (t.score * FLOOR(1+RAND()*5000) *2) 
+                  ELSE (t.score * FLOOR(1+RAND()*5000)) END )
+                  WHERE t.published = 1 AND t.deleted=0 AND t.score > 0
+                  ORDER BY rand()
+                  LIMIT 5000';
+        Yii::$app->db->createCommand($sql)->query();
+        print 'done' . chr(10);
+    }
+
     public function actionViewsbak()
     {
         $char = range('a', 'zzz');
