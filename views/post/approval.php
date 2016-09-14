@@ -21,6 +21,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+            'id',
+            [
+                'attribute' => 'score',
+                'label' => 'Score',
+                'format' => 'raw',
+                'contentOptions'=>['style'=>'min-width: 100px;'],
+                'value' => function ($data) {
+                    return $this->render('//score/form', ['model' => $data]);
+                },
+            ],
             [
                 'attribute' => 'cover',
                 'label' => 'Cover',
@@ -49,6 +59,20 @@ $this->params['breadcrumbs'][] = $this->title;
                         'target' => '_blank'
                     ]);
                 },
+            ],
+            [
+                'attribute' => 'views',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    return $data->stats->views;
+                }
+            ],
+            [
+                'attribute' => 'profit',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    return $data->stats->profit;
+                }
             ],
             'created_at',
             [
