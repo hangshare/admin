@@ -24,10 +24,10 @@ class PostController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'delete', 'index', 'view', 'update', 'setfeatured', 'plot', 'export', 'inc'],
+                'only' => ['create', 'delete', 'index', 'view', 'update', 'setfeatured', 'plot', 'export', 'inc', 'score'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'view', 'update', 'setfeatured', 'export', 'plot', 'inc'],
+                        'actions' => ['create', 'delete', 'index', 'view', 'update', 'setfeatured', 'export', 'plot', 'inc', 'score'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -169,6 +169,13 @@ class PostController extends Controller
         ]);
     }
 
+
+    public function actionScore()
+    {
+        $this->layout = false;
+        Yii::$app->db->createCommand("UPDATE post SET score = {$_POST['value']} WHERE id = {$_POST['id']};")->query();
+        echo 'done';
+    }
 
     /**
      * Lists all Post models.
