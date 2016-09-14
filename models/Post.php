@@ -12,55 +12,63 @@ use Yii;
  * @property string $cover
  * @property string $title
  * @property integer $type
+ * @property integer $score
  * @property string $created_at
  */
-class Post extends \yii\db\ActiveRecord {
+class Post extends \yii\db\ActiveRecord
+{
 
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'post';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['userId', 'cover', 'title', 'type'], 'required'],
-            [['userId', 'type','deleted','published'], 'integer'],
+            [['userId', 'type', 'deleted', 'published', 'score'], 'integer'],
             [['created_at, featured'], 'safe'],
             [['cover'], 'string', 'max' => 500],
             [['title'], 'string', 'max' => 250]
         ];
     }
-    
-    
+
+
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStats() {
+    public function getStats()
+    {
         return $this->hasOne(PostStats::className(), ['postId' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser() {
+    public function getUser()
+    {
         return $this->hasOne(User::className(), ['id' => 'userId']);
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => 'ID',
             'userId' => 'User ID',
             'cover' => 'Cover',
             'title' => 'Title',
             'type' => 'Type',
+            'score' => 'Score',
             'created_at' => 'Created At',
         ];
     }
