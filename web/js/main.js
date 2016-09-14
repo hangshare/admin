@@ -120,6 +120,7 @@ $(function () {
             }
         });
     }
+
     $(document).on('click', '#userdate', function (e) {
         e.preventDefault();
         plotUser();
@@ -140,35 +141,40 @@ $(function () {
             }
         });
     }
+
     var plot
+
     function poltLines(view, data) {
         plot = $.plot(view,
-                [{data: data,
-                        color: "#c75d7b"}],
-                {
-                    series: {
-                        lines: {
-                            show: true,
-                            fill: true,
-                            fillColor: "rgba(255, 204, 204, 0.7)"
-                        },
-                        points: {
-                            show: false
-                        }
+            [{
+                data: data,
+                color: "#c75d7b"
+            }],
+            {
+                series: {
+                    lines: {
+                        show: true,
+                        fill: true,
+                        fillColor: "rgba(255, 204, 204, 0.7)"
                     },
-                    xaxis: {
-                        mode: "time",
-                        timeformat: "%m/%d"
-                    },
-                    yaxis: {min: 0},
-                    tooltip: true,
-                    grid: {
-                        hoverable: true,
-                        clickable: false,
-                        borderWidth: 0
-                    },
-                });
+                    points: {
+                        show: false
+                    }
+                },
+                xaxis: {
+                    mode: "time",
+                    timeformat: "%m/%d"
+                },
+                yaxis: {min: 0},
+                tooltip: true,
+                grid: {
+                    hoverable: true,
+                    clickable: false,
+                    borderWidth: 0
+                },
+            });
     }
+
     if (base_url === '/') {
         plotUser();
         plotPosts();
@@ -187,6 +193,7 @@ $(function () {
             $('#NewsLetter').hide();
         }
     }
+
     $('#emailqueue-type').change(function () {
         bulkmailv($(this).val());
     });
@@ -201,4 +208,42 @@ $(function () {
             }
         });
     });
+
+    $(document).on('click', '.rate', function (e) {
+        var rel = $(this).attr('rel');
+        var obj = $(this).parent().parent().parent();
+        var Id = obj.find('.postId').val();
+        obj.find('.rateval').val(rel);
+        console.log(Id);
+
+        $.ajax({
+            url: 'post/score',
+            type: 'POST',
+            data: {
+                'id': Id,
+                'value': rel,
+            }
+        });
+    });
+
+    $(".star-rating").mouseout(function () {
+        var value = $(this).parent().find('.rateval').val();
+        $(this).find('.rate').each(function () {
+            $(this).removeClass('on');
+            if ($(this).attr('rel') <= value) {
+               $(this).addClass('on');
+            }
+        });
+    });
+    $(".rate").mouseover(function () {
+        var rel = $(this).attr('rel');
+        $(this).parent().parent().find('.rate').each(function () {
+            if ($(this).attr('rel') <= rel) {
+                $(this).addClass('on');
+            } else {
+                $(this).removeClass('on');
+            }
+        });
+    });
+
 });
