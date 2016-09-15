@@ -214,8 +214,6 @@ $(function () {
         var obj = $(this).parent().parent().parent();
         var Id = obj.find('.postId').val();
         obj.find('.rateval').val(rel);
-        console.log(Id);
-
         $.ajax({
             url: '/post/score',
             type: 'POST',
