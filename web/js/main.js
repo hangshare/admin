@@ -217,7 +217,7 @@ $(function () {
         console.log(Id);
 
         $.ajax({
-            url: 'post/score',
+            url: '/post/score',
             type: 'POST',
             data: {
                 'id': Id,
