@@ -9,9 +9,9 @@ namespace app\commands;
 
 use Yii;
 use yii\console\Controller;
-use app\commands\User;
+//use app\commands\User;
 use app\models\Post;
-
+use app\models\User;
 
 class CronController extends Controller
 {
@@ -37,7 +37,6 @@ class CronController extends Controller
 
     public function actionUserimage()
     {
-
         $file = dirname(__FILE__) . "/../runtime/userimage.txt";
         $pr_file = fopen($file, "r") or die("Unable to open file!");;
         $projectId = fread($pr_file, filesize($file));
