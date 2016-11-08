@@ -15,7 +15,8 @@ use app\models\Post;
 
 class CronController extends Controller
 {
-    public function actionSort(){
+    public function actionSort()
+    {
         $sql = 'UPDATE `post` t SET  `sort` = (CASE WHEN t.score > 3 THEN (t.score * FLOOR(1+RAND()*5000) *2) 
                   ELSE (t.score * FLOOR(1+RAND()*5000)) END )
                   WHERE t.published = 1 AND t.deleted=0 AND t.score > 0
@@ -32,6 +33,34 @@ class CronController extends Controller
         Yii::$app->db->createCommand("CREATE TABLE hangshare.post_view_{$char[$i]} LIKE hangshare.post_view;
               INSERT hangshare.post_view_{$char[$i]} SELECT * FROM hangshare.post_view;")->query();
         Yii::$app->db->createCommand("TRUNCATE `hangshare`.`post_view`;")->query();
+    }
+
+    public function actionUserimage()
+    {
+
+        $file = dirname(__FILE__) . "/../runtime/userimage.txt";
+        $pr_file = fopen($file, "r") or die("Unable to open file!");;
+        $projectId = fread($pr_file, filesize($file));
+        fclose($pr_file);
+        $id = (int)$projectId;
+
+        $user = User::find()->where("scId != '' AND id >= {$id}")->limit(100)->all();
+        print 'Count : ' . count($user) . chr(10);
+        foreach ($user as $user) {
+            $url = "https://graph.facebook.com/{$user->scId}/picture?type=large";
+            $image = preg_replace('/(\d{4})-(\d{2})-(\d{2})$/', '', $user->name) . '-' . uniqid() . '.jpg';
+            $user->image = 'user/' . $image;
+            $imagecontent = file_get_contents($url);
+            $imageFile = Yii::$app->basePath . '/media/' . $user->image;
+            if (!is_dir(Yii::$app->basePath . '/media/user')) {
+                mkdir(Yii::$app->basePath . '/media/user', 0777, true);
+            }
+            file_put_contents($imageFile, $imagecontent);
+            Yii::$app->customs3->uploadFromPath($imageFile, 'hangshare-media', 'fa/' . $user->image);
+            Yii::$app->imageresize->PatchResize('hangshare-media', 'fa/' . $user->image, 'user');
+            print $user->id . chr(10);
+            $user->save(false);
+        }
     }
 
 
@@ -71,7 +100,6 @@ class CronController extends Controller
                     fclose($pr_file);
                     if (strpos($json->image, '.lnk') === false)
                         Yii::$app->imageresize->PatchResize('hangshare-media', $json->image, 'post');
-
 
 
                 } else {
