@@ -58,6 +58,11 @@ class CronController extends Controller
             Yii::$app->customs3->uploadFromPath($imageFile, 'hangshare-media', 'fa/' . $user->image);
             Yii::$app->imageresize->PatchResize('hangshare-media', 'fa/' . $user->image, 'user');
             print $user->id . chr(10);
+
+            $pr_file = fopen($file, "w") or die("Unable to open file!");
+            fwrite($pr_file, $user->id + 1);
+            fclose($pr_file);
+
             $user->save(false);
         }
     }
