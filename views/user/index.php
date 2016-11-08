@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'Image',
                     'format' => 'raw',
                     'value' => function ($data) {
-                        if(empty($data->image))
+                        if (empty($data->image))
                             return 'NO image';
                         $thump = Yii::$app->imageresize->thump($data->image, 80, 80, 'crop');
                         $thump_full = str_replace('/80x80-crop', '', $thump);
@@ -49,6 +49,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                 ],
                 'scId',
+                [
+                    'label' => 'LINK',
+                    'format' => 'raw',
+                    'value' => function ($data) {
+                        return Html::a($data->name, "https://www.hangshare.com/site/win/{$data->id}/", [
+                            'target' => '_blank'
+                        ]);
+                    },
+                ],
                 [
                     'attribute' => 'name',
                     'format' => 'raw',
