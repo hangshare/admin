@@ -43,7 +43,7 @@ class CronController extends Controller
         fclose($pr_file);
         $id = (int)$projectId;
 
-        $user = User::find()->where("scId != '' AND id >= {$id}")->limit(100)->all();
+        $user = User::find()->where("scId != '' AND id = 819")->limit(1)->all();
         print 'Count : ' . count($user) . chr(10);
         foreach ($user as $user) {
             $url = "https://graph.facebook.com/{$user->scId}/picture?type=large";
@@ -58,7 +58,6 @@ class CronController extends Controller
             Yii::$app->customs3->uploadFromPath($imageFile, 'hangshare-media', $user->image);
             Yii::$app->imageresize->PatchResize('hangshare-media', $user->image, 'user');
             print $user->id . chr(10);
-
             $pr_file = fopen($file, "w") or die("Unable to open file!");
             fwrite($pr_file, $user->id + 1);
             fclose($pr_file);
