@@ -48,6 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return Html::a(Html::img($thump, ['width' => 80, 'alt' => 'image']), $thump_full, ['target' => '_blank']);
                     },
                 ],
+                'scId',
                 [
                     'attribute' => 'name',
                     'format' => 'raw',
