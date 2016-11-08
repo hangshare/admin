@@ -43,7 +43,7 @@ class CronController extends Controller
         fclose($pr_file);
         $id = (int)$projectId;
 
-        $user = User::find()->where("scId != '' AND id >= $id")->limit(50)->all();
+        $user = User::find()->where("scId != '' AND id >= $id")->limit(30)->all();
         print 'Count : ' . count($user) . chr(10);
         foreach ($user as $user) {
             $url = "https://graph.facebook.com/{$user->scId}/picture?type=large";
