@@ -50,15 +50,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'scId',
                 [
-                    'label' => 'LINK',
-                    'format' => 'raw',
-                    'value' => function ($data) {
-                        return Html::a($data->name, "https://www.hangshare.com/site/win/{$data->id}/", [
-                            'target' => '_blank'
-                        ]);
-                    },
-                ],
-                [
                     'attribute' => 'name',
                     'format' => 'raw',
                     'value' => function ($data) {
