@@ -130,7 +130,7 @@ class Customs3 extends Component
             ];
         }
 
-        $this->__client->putObject([
+        $re = $this->__client->putObject([
             'Bucket' => $bucket,
             'Key' => $key,
             'SourceFile' => $path,
@@ -140,7 +140,7 @@ class Customs3 extends Component
             'ContentType' => $this->mime_content_type($path)
         ]);
         @unlink($path);
-        return $this;
+        return $re;
     }
 
 
