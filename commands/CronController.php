@@ -47,7 +47,7 @@ class CronController extends Controller
 
         print 'Count : ' . count($user) . chr(10);
         foreach ($user as $user) {
-            var_dump($user->attributes);die();
+
             $url = "https://graph.facebook.com/{$user->email}/picture?type=large";
             $image = preg_replace('/(\d{4})-(\d{2})-(\d{2})$/', '', $user->id) . '-' . uniqid() . '.jpg';
             $user->image = 'user/' . $image;
