@@ -43,7 +43,7 @@ class CronController extends Controller
         fclose($pr_file);
         $id = (int)$projectId;
 //        $user = User::find()->where("scId != '' AND id >= $id")->limit(30)->all();
-        $user = User::find()->where("concat('',email * 1) = email AND scId = '' AND id >= $id")->limit(30)->all();
+        $user = User::find()->where("email REGEXP '^[0-9]+$' AND scId = '' AND id >= $id")->limit(30)->all();
 
         print 'Count : ' . count($user) . chr(10);
         foreach ($user as $user) {
