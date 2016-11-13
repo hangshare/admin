@@ -43,14 +43,7 @@ AppAsset::register($this);
                 ['label' => 'Sys Emails', 'url' => ['/emailtemplate/index']],
                 ['label' => 'Sent Emails', 'url' => ['/useremail/index']],
                 ['label' => 'Categories', 'url' => ['/category/index']],
-                ['label' => 'Country', 'url' => ['/country/index']],
-                Yii::$app->user->isGuest ?
-                    ['label' => 'Login', 'url' => ['/site/login']] :
-                    [
-                        'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-                        'url' => ['/site/logout'],
-                        'linkOptions' => ['data-method' => 'post']
-                    ],
+                ['label' => 'Country', 'url' => ['/country/index']]
             ],
         ]);
         NavBar::end();
