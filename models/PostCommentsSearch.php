@@ -47,6 +47,23 @@ class PostCommentsSearch extends PostComments
             'query' => $query,
         ]);
 
+        $dataProvider->setSort([
+            'defaultOrder' => ['id' => SORT_DESC],
+            'attributes' => [
+                'id' => [
+                    'asc' => ['id' => SORT_ASC],
+                    'desc' => ['id' => SORT_DESC],
+                    'label' => 'ID',
+                    'default' => SORT_DESC
+                ],
+                'created_at' => [
+                    'asc' => ['created_at' => SORT_ASC],
+                    'desc' => ['created_at' => SORT_DESC],
+                    'label' => 'Post Date',
+                ],
+            ]
+        ]);
+
         $this->load($params);
 
         if (!$this->validate()) {
