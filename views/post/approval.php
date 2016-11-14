@@ -46,9 +46,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'User Name/ID',
                 'format' => 'raw',
                 'value' => function ($data) {
-                    return Html::a($data->user->name, "https://www.hangshare.com/user/{$data->userId}/", [
+                    $username = empty($data->user->username) ? $data->userId : $data->user->username;
+                    return Html::a($data->user->name, "https://www.hangshare.com/user/{$username}/", [
                         'target' => '_blank'
-                    ]) .' ' . Html::a('<span class="not-set">(Delete)</span>', ['//user/delete', 'id' => $data->userId], [
+                    ]) . ' ' . Html::a('<span class="not-set">(Delete)</span>', ['//user/delete', 'id' => $data->userId], [
                         'data' => [
                             'confirm' => "Are you sure you want to delete profile?",
                             'method' => 'post',
