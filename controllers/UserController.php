@@ -255,7 +255,7 @@ class UserController extends Controller {
 
         Yii::$app->db->createCommand("UPDATE user SET deleted = 1 where id = {$id}")->query();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
