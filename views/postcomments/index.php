@@ -13,25 +13,35 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="post-comments-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Create Post Comments', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'userId',
-            'postId',
+            [
+                'attribute' => 'user',
+                'label' => 'User Name/ID',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    $username = empty($data->user->username) ? $data->userId : $data->user->username;
+                    return Html::a($data->user->name, "https://www.hangshare.com/user/{$username}/", [
+                        'target' => '_blank'
+                    ]);
+                },
+            ],
+            [
+                'attribute' => 'post',
+                'label' => 'Post Title',
+                'format' => 'raw',
+                'value' => function ($data) {
+                    return Html::a($data->post->title, "https://www.hangshare.com/{$data->post->urlTitle}/", [
+                        'target' => '_blank'
+                    ]);
+                },
+            ],
             'comment',
             'created_at',
             // 'parentId',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
