@@ -38,6 +38,22 @@ class PostComments extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'userId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPost()
+    {
+        return $this->hasOne(Post::className(), ['id' => 'postId']);
+    }
+
+    /**
      * @inheritdoc
      */
     public function attributeLabels()
