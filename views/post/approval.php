@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'score',
                 'label' => 'Score',
                 'format' => 'raw',
-                'contentOptions'=>['style'=>'min-width: 100px;'],
+                'contentOptions' => ['style' => 'min-width: 100px;'],
                 'value' => function ($data) {
                     return $this->render('//score/form', ['model' => $data]);
                 },
@@ -48,6 +48,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($data) {
                     return Html::a($data->user->name, "https://www.hangshare.com/user/{$data->userId}/", [
                         'target' => '_blank'
+                    ]) .' ' . Html::a('<span class="not-set">(Delete)</span>', ['//user/delete', 'id' => $data->userId], [
+                        'data' => [
+                            'confirm' => "Are you sure you want to delete profile?",
+                            'method' => 'post',
+                        ]
                     ]);
                 },
             ],
