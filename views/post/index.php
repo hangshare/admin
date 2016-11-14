@@ -49,7 +49,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'User Name/ID',
                 'format' => 'raw',
                 'value' => function ($data) {
-                    return Html::a($data->user->name, "https://www.hangshare.com/user/{$data->userId}/", [
+                    $username = empty($data->user->username) ? $data->userId : $data->user->username;
+                    return Html::a($data->user->name, "https://www.hangshare.com/user/{$username}/", [
                         'target' => '_blank'
                     ]);
                 },

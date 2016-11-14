@@ -30,7 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         if (!isset($data->user)) {
                             return '-';
                         }
-                        return Html::a($data->user->name, "https://www.hangshare.com/user/{$data->userId}/", [
+                        $username = empty($data->user->username) ? $data->userId : $data->user->username;
+                        return Html::a($data->user->name, "https://www.hangshare.com/user/{$username}/", [
                             'target' => '_blank'
                         ]);
                     },

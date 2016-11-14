@@ -31,7 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     if (!isset($data->users)) {
                         return 'Deleted';
                     }
-                    return Html::a($data->users->name, "https://www.hangshare.com/user/{$data->userId}/", [
+                    $username = empty($data->user->username) ? $data->userId : $data->user->username;
+                    return Html::a($data->users->name, "https://www.hangshare.com/user/{$username}/", [
                                 'target' => '_blank'
                     ]);
                 }
