@@ -224,10 +224,10 @@ class PostController extends Controller
         $model->published = 1;
         $model->save(false);
 
-        AwsEmail::queueUser($model->userId, 'post_aproved', [
-            '__title__' => $model->title,
-            '__url__' => "https://www.hangshare.com/{$model->urlTitle}/"
-        ], 'ar');
+//        AwsEmail::queueUser($model->userId, 'post_aproved', [
+//            '__title__' => $model->title,
+//            '__url__' => "https://www.hangshare.com/{$model->urlTitle}/"
+//        ], 'ar');
 
         return $this->redirect(['approval']);
     }
