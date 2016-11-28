@@ -10,10 +10,21 @@ use app\models\Category;
 ?>
 <div class="category-form">
     <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'parent')->dropDownList(ArrayHelper::map(Category::find('parent = 0')->all(), 'id', 'title'), ['prompt' => '']) ?>
-    <?= $form->field($model, 'lang')->dropDownList(['ar' => 'Arabic', 'en' => 'English'], ['prompt' => '']) ?>
-    <?= $form->field($model, 'url_link')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'اخبار اقتصادية']) ?>
+
+    <?= $form->field($model, 'url_link')->textInput(['maxlength' => true, 'placeholder' => 'اخبار-اقتصادية']) ?>
+
+
+    <?php echo $form->field($model, 'lang')->hiddenInput(['value' => $_GET['lang']])->label(false) ?>
+
+    <?php
+    if (isset($_GET['par'])) {
+        $model->parent = $_GET['par'];
+    }
+    echo $form->field($model, 'parent')->dropDownList(ArrayHelper::map(Category::find()
+        ->where(['parent' => null, 'lang' => $_GET['lang']])
+        ->all(), 'id', 'title'), ['prompt' => ' Main Category']) ?>
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
