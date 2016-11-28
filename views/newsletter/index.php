@@ -14,7 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <h1 class="pull-left"><?= Html::encode($this->title) ?></h1>
         <ul class="list list-inline pull-right">
-            <li><?= Html::a('Email List', ['/emaillist/index'], ['class' => 'btn btn-default']) ?></li>
             <li><?= Html::a('Send Bulk Email', ['create'], ['class' => 'btn btn-danger']) ?></li>
         </ul>
     </div>
