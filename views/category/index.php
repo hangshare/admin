@@ -59,9 +59,9 @@ $articlesurl = Yii::t('app', 'articles-url');
                                 <ul class="supdropdown">
                                     <?php foreach ($mData['sub'] as $submenu) : ?>
                                         <li><?php echo Html::a($submenu['title'], "https://www.hangshare.com/articles/{$mData['url']}/{$submenu['url']}"); ?>
-                                            <?= Html::a(' (Edit)', ['update', 'id' => $submenu['id']]) ?>
+                                            <?= Html::a(' (Edit)', ['update', 'id' => $submenu['id'],'lang'=>'en']) ?>
                                             <?=
-                                            Html::a(' (delete)', ['delete', 'id' => $submenu['id']], [
+                                            Html::a(' (delete)', ['delete', 'id' => $submenu['id'],'lang'=>'en'], [
                                                 'data' => [
                                                     'confirm' => 'Are you sure you want to delete the category?',
                                                     'method' => 'post',
