@@ -15,7 +15,8 @@ use Yii;
  * @property integer $end_at
  * @property integer $status
  */
-class EmailQueue extends \yii\db\ActiveRecord {
+class EmailQueue extends \yii\db\ActiveRecord
+{
 
     public $toIdStr = [
         '1' => 'HangShare Users',
@@ -32,30 +33,34 @@ class EmailQueue extends \yii\db\ActiveRecord {
         '3' => 'Newest Posts',
         '4' => 'Selected Posts'
     ];
-    public $subject, $body, $postNum, $postType, $SelectedPosts;
+    public $subject, $body, $postNum, $postType, $SelectedPosts, $end_at, $toId;
+
 
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'email_queue';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['emailId', 'type', 'opened_num', 'start_at', 'end_at', 'status'], 'required'],
             [['emailId', 'type', 'opened_num', 'start_at', 'end_at, toId', 'status'], 'integer'],
-            [['subject', 'body','SelectedPosts','postType','postNum'], 'safe']
+            [['subject', 'body', 'SelectedPosts', 'postType', 'postNum', 'toId', 'end_at'], 'safe']
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'id' => 'ID',
             'emailId' => 'Email ID',
@@ -64,8 +69,8 @@ class EmailQueue extends \yii\db\ActiveRecord {
             'start_at' => 'Start At',
             'end_at' => 'End At',
             'status' => 'Status',
-            'postNum'=>'Number of Articles to Send',
-            'postType'=>'Selected Articles',
+            'postNum' => 'Number of Articles to Send',
+            'postType' => 'Selected Articles',
         ];
     }
 
