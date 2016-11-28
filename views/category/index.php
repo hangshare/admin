@@ -14,10 +14,6 @@ $articlesurl = Yii::t('app', 'articles-url');
 ?>
 <div class="category-index">
     <div class="row">
-        <h1 class="pull-left"><?= Html::encode($this->title) ?></h1>
-        <p class="pull-right"><?= Html::a('Add Category', ['create'], ['class' => 'btn btn-success']) ?></p>
-    </div>
-    <div class="row">
         <?php
         $mainMenu = [];
         foreach ($menu as $menuData) {
@@ -33,18 +29,29 @@ $articlesurl = Yii::t('app', 'articles-url');
         }
         ?>
         <div class="col-md-6">
-            <ul>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="pull-left">English Category</h2>
+                    <div class="pull-right">
+                        <?= Html::a('Add Category', ['create', 'lang' => 'en'], ['class' => 'btn btn-success']) ?>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <ul style="font-size: 20px;">
                 <?php foreach ($mainMenu as $mData) : ?>
                     <?php
                     if ($mData['lang'] == 'en') : ?>
                         <li <?php if (isset($mData['sub'])): ?><?php endif; ?>>
-                            <a href="<?= "https://www.hangshare.com/articles/{$mData['url']}" ?>"><?= $mData['title'] ?></a>
-                            <?= Html::a(' (Edit)', ['update','id'=>$mData['id']])?>
+                            <a style="font-weight: bold;"
+                               href="<?= "https://www.hangshare.com/articles/{$mData['url']}" ?>"><?= $mData['title'] ?></a>
+                            <?= Html::a(' (Add)', ['create', 'par' => $mData['id'], 'lang' => 'en']) ?>
+                            <?= Html::a(' (Edit)', ['update', 'id' => $mData['id'], 'lang' => 'en']) ?>
                             <?=
-                            Html::a(' (delete)', ['delete','id'=>$mData['id']], [
+                            Html::a(' (delete)', ['delete', 'id' => $mData['id']], [
                                 'data' => [
                                     'confirm' => 'Are you sure you want to delete the category?',
-                                    'method' => 'post',
+                                    'method' => 'post'
                                 ]
                             ])
                             ?>
@@ -52,9 +59,9 @@ $articlesurl = Yii::t('app', 'articles-url');
                                 <ul class="supdropdown">
                                     <?php foreach ($mData['sub'] as $submenu) : ?>
                                         <li><?php echo Html::a($submenu['title'], "https://www.hangshare.com/articles/{$mData['url']}/{$submenu['url']}"); ?>
-                                            <?= Html::a(' (Edit)', ['update','id'=>$submenu['id']])?>
+                                            <?= Html::a(' (Edit)', ['update', 'id' => $submenu['id']]) ?>
                                             <?=
-                                            Html::a(' (delete)', ['delete','id'=>$submenu['id']], [
+                                            Html::a(' (delete)', ['delete', 'id' => $submenu['id']], [
                                                 'data' => [
                                                     'confirm' => 'Are you sure you want to delete the category?',
                                                     'method' => 'post',
@@ -71,14 +78,25 @@ $articlesurl = Yii::t('app', 'articles-url');
             </ul>
         </div>
         <div class="col-md-6">
-            <ul>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="pull-left">Arabic Category</h2>
+                    <div class="pull-right">
+                        <?= Html::a('Add Category', ['create', 'lang' => 'ar'], ['class' => 'btn btn-success']) ?>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <ul style="font-size: 20px;">
                 <?php foreach ($mainMenu as $mData) : ?>
                     <?php if ($mData['lang'] == 'ar') : ?>
                         <li <?php if (isset($mData['sub'])): ?><?php endif; ?>>
-                            <a href="<?= "https://www.hangshare.com/مواضيع/{$mData['url']}" ?>"><?= $mData['title'] ?></a>
-                            <?= Html::a(' (Edit)', ['update','id'=>$mData['id']])?>
+                            <a style="font-weight: bold;"
+                               href="<?= "https://www.hangshare.com/مواضيع/{$mData['url']}" ?>"><?= $mData['title'] ?></a>
+                            <?= Html::a(' (Add)', ['create', 'par' => $mData['id'], 'lang' => 'ar']) ?>
+                            <?= Html::a(' (Edit)', ['update', 'id' => $mData['id'], 'lang' => 'ar']) ?>
                             <?=
-                            Html::a(' (delete)', ['delete','id'=>$mData['id']], [
+                            Html::a(' (delete)', ['delete', 'id' => $mData['id']], [
                                 'data' => [
                                     'confirm' => 'Are you sure you want to delete the category?',
                                     'method' => 'post',
@@ -89,9 +107,9 @@ $articlesurl = Yii::t('app', 'articles-url');
                                 <ul class="supdropdown">
                                     <?php foreach ($mData['sub'] as $submenu) : ?>
                                         <li><?php echo Html::a($submenu['title'], "https://www.hangshare.com/مواضيع/{$mData['url']}/{$submenu['url']}"); ?>
-                                            <?= Html::a(' (Edit)', ['update','id'=>$submenu['id']]) ?>
+                                            <?= Html::a(' (Edit)', ['update', 'id' => $submenu['id'], 'lang' => 'ar']) ?>
                                             <?=
-                                            Html::a(' (delete)', ['delete','id'=>$submenu['id']], [
+                                            Html::a(' (delete)', ['delete', 'id' => $submenu['id'], 'lang' => 'ar'], [
                                                 'data' => [
                                                     'confirm' => 'Are you sure you want to delete the category?',
                                                     'method' => 'post',
