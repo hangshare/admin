@@ -9,11 +9,11 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="col-md-4">
-    <?php $form = ActiveForm::begin(['id'=>'previewEmail']); ?>
+    <?php $form = ActiveForm::begin(['id' => 'previewEmail']); ?>
     <?= $form->field($model, 'type')->dropDownList($model->typeStr) ?>
     <?= $form->field($model, 'subject')->textInput() ?>
     <div id="NewsLetter" style="display: none">
-        <?= $form->field($model, 'postNum')->textInput() ?>    
+        <?= $form->field($model, 'postNum')->textInput() ?>
         <?= $form->field($model, 'postType')->dropDownList($model->postTypeStr) ?>
         <div id="customSelect" style="display: none">
             <?= $form->field($model, 'SelectedPosts')->textInput() ?>
