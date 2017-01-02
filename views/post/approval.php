@@ -61,7 +61,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'title',
                 'format' => 'raw',
                 'value' => function ($data) {
-                    return Html::a($data->title, "https://www.hangshare.com/{$data->urlTitle}/", [
+                    $lang= '';
+                    if($data->lang == 'en'){
+                        $lang= 'en/';
+                    }
+                    return Html::a($data->title, "https://www.hangshare.com/{$lang}{$data->urlTitle}/", [
                         'target' => '_blank'
                     ]);
                 },
