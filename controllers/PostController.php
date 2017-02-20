@@ -24,10 +24,10 @@ class PostController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'delete', 'index', 'view', 'update', 'setfeatured', 'plot', 'export', 'inc', 'score'],
+                'only' => ['create', 'delete', 'index', 'view', 'update', 'setfeatured', 'plot', 'export', 'inc', 'score', 'all'],
                 'rules' => [
                     [
-                        'actions' => ['create', 'delete', 'index', 'view', 'update', 'setfeatured', 'export', 'plot', 'inc', 'score'],
+                        'actions' => ['create', 'delete', 'index', 'view', 'update', 'setfeatured', 'export', 'plot', 'inc', 'score', 'all'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -151,6 +151,20 @@ class PostController extends Controller
         exit();
     }
 
+
+    public function actionAll()
+    {
+        $searchModel = new PostSearch();
+        $searchModel->published = 0;
+        $searchModel->deleted = 0;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        foreach ($dataProvider->getModels() as $model) {
+            $model->published = 1;
+            $model->save(false);
+        }
+        return $this->redirect(['approval']);
+    }
 
     /**
      * Lists all Post models.
