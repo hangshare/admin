@@ -14,7 +14,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="post-index">
     <div class="row">
         <h1 style="margin: 0 0 10px 10px;" class="pull-left"><?= Html::encode($this->title) ?></h1>
+        <?= Html::a('Approve all', ['all'], ['class' => 'btn btn-danger pull-right']) ?>
     </div>
+
     <?=
     GridView::widget([
         'dataProvider' => $dataProvider,
