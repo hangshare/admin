@@ -8,7 +8,8 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 $s3FormDetails = getS3Details('hangshare.admin');
 
-function getS3Details($s3Bucket, $region = 'us-east-1', $acl = 'public-read') {
+function getS3Details($s3Bucket, $region = 'us-east-1', $acl = 'public-read')
+{
     $awsKey = 'AKIAIXXCGXOS77W753RQ';
     $awsSecret = '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';
     $algorithm = "AWS4-HMAC-SHA256";
@@ -61,6 +62,7 @@ function getS3Details($s3Bucket, $region = 'us-east-1', $acl = 'public-read') {
 
     return compact('url', 'inputs');
 }
+
 ?>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 <script type="text/javascript">
@@ -70,10 +72,12 @@ function getS3Details($s3Bucket, $region = 'us-east-1', $acl = 'public-read') {
             if (input.files && input.files[0]) {
                 $('#submit').prop("disabled", "disabled");
                 formData = new FormData();
-<?php foreach ($s3FormDetails['inputs'] as $name => $value) { ?>
-                    formData.append("<?= $name; ?>", "<?= $value; ?>");
-<?php } ?>
-                formData.append("key", input.files[0].name);
+                <?php foreach ($s3FormDetails['inputs'] as $name => $value) { ?>
+                formData.append("<?= $name; ?>", "<?= $value; ?>");
+                <?php } ?>
+
+                var rand = getRandomInt(0,999999);
+                formData.append("key", rand + '-' + input.files[0].name);
                 formData.append("file", input.files[0]);
 
                 $.ajax({
@@ -94,12 +98,15 @@ function getS3Details($s3Bucket, $region = 'us-east-1', $acl = 'public-read') {
                 });
             }
         };
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
     });
 </script>
 <div class="well">
     <?php
     $form = ActiveForm::begin([
-                'options' => ['enctype' => 'multipart/form-data']
+        'options' => ['enctype' => 'multipart/form-data']
     ]);
     ?>
     <div class="form-group">
