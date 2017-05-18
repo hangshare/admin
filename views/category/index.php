@@ -44,7 +44,7 @@ $articlesurl = Yii::t('app', 'articles-url');
                     if ($mData['lang'] == 'en') : ?>
                         <li <?php if (isset($mData['sub'])): ?><?php endif; ?>>
                             <a style="font-weight: bold;"
-                               href="<?= "https://www.hangshare.com/articles/{$mData['url']}" ?>"><?= $mData['title'] ?></a>
+                               href="<?= "https://www.hangshare.com/en/articles/{$mData['url']}" ?>"><?= $mData['title'] ?></a>
                             <?= Html::a(' (Add)', ['create', 'par' => $mData['id'], 'lang' => 'en']) ?>
                             <?= Html::a(' (Edit)', ['update', 'id' => $mData['id'], 'lang' => 'en']) ?>
                             <?=
@@ -58,7 +58,7 @@ $articlesurl = Yii::t('app', 'articles-url');
                             <?php if (isset($mData['sub'])): ?>
                                 <ul class="supdropdown">
                                     <?php foreach ($mData['sub'] as $submenu) : ?>
-                                        <li><?php echo Html::a($submenu['title'], "https://www.hangshare.com/articles/{$mData['url']}/{$submenu['url']}"); ?>
+                                        <li><?php echo Html::a($submenu['title'], "https://www.hangshare.com/en/articles/{$mData['url']}/{$submenu['url']}"); ?>
                                             <?= Html::a(' (Edit)', ['update', 'id' => $submenu['id'], 'lang' => 'en']) ?>
                                             <?=
                                             Html::a(' (delete)', ['delete', 'id' => $submenu['id'], 'lang' => 'en'], [
